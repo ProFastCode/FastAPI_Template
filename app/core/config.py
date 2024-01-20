@@ -9,11 +9,8 @@ class Settings(BaseSettings):
     # APP
     APP_HOST: str
     APP_PORT: int
-    API_V1_STR: str
-
-    # Secret
-    SECRET_KEY: str
-    ALGORITHM: str
+    APP_API_PREFIX: str
+    APP_AUTH_SECRET: str
 
     # DATABASE
     POSTGRES_HOST: str

@@ -21,5 +21,5 @@ def create_access_token(email: str):
         email=email,
         exp=datetime.utcnow() + timedelta(minutes=120)
     )
-    encoded_jwt = jwt.encode(data, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
+    encoded_jwt = jwt.encode(data, settings.APP_AUTH_SECRET, algorithm="HS256")
     return encoded_jwt
