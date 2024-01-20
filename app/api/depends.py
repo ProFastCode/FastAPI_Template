@@ -11,7 +11,7 @@ from app.core.config import settings
 from app.database import Database
 from app.database.database import engine
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl=f"{settings.API_V1_STR}/users/token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl=f"{settings.APP_API_PREFIX}/users/token")
 
 
 async def get_db(request: Request = None) -> Database:
@@ -24,7 +24,7 @@ async def get_db(request: Request = None) -> Database:
 
 async def authorization(token: str, db: Database, credentials_exception):
     try:
-        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
+        payload = jwt.decode(token, settings.APP_AUTH_SECRET, algorithms=["HS256"])
         email: str = payload.get("email")
         if not email:
             raise credentials_exception
