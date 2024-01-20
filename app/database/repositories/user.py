@@ -14,17 +14,17 @@ class UserRepo(Repository[User]):
 
     async def new(
         self,
-        email: str | None = None,
+        username: str | None = None,
         password: str | None = None,
     ) -> User:
         new_user = await self.session.merge(
             User(
-                email=email,
+                username=username,
                 password=password,
             )
         )
         return new_user
 
-    async def get_by_email(self, email: str) -> User:
-        user = await self.get_by_where(User.email == email)
+    async def get_by_username(self, username: str) -> User:
+        user = await self.get_by_where(User.username == username)
         return user

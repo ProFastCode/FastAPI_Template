@@ -25,12 +25,12 @@ async def get_db(request: Request = None) -> Database:
 async def authorization(token: str, db: Database, credentials_exception):
     try:
         payload = jwt.decode(token, settings.APP_AUTH_SECRET, algorithms=["HS256"])
-        email: str = payload.get("email")
-        if not email:
+        username: str = payload.get("username")
+        if not username:
             raise credentials_exception
     except JWTError:
         raise credentials_exception
-    user = await db.user.get_by_email(email)
+    user = await db.user.get_by_username(username)
     if not user:
         raise credentials_exception
     return user
