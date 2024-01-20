@@ -31,14 +31,7 @@ class Repository(Generic[AbstractModel]):
     async def get_many(
         self, whereclause=None, limit: int = None, order_by=None
     ):
-        statement = select(self.type_model)
-        if whereclause:
-            statement.where(whereclause)
-        if limit:
-            statement.limit(limit)
-        if order_by:
-            statement = statement.order_by(order_by)
-
+        statement = select(self.type_model).where(whereclause).limit(limit).order_by(order_by)
         return (await self.session.scalars(statement)).unique().all()
 
     async def delete(self, whereclause) -> None:
