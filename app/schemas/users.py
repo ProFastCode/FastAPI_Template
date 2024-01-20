@@ -10,7 +10,7 @@ class UserScheme(BaseModel):
     Схема, которую возвращает бэк.
     """
     id: int = 0
-    email: str = "email"
+    username: str = "username"
 
     class Config:
         from_attributes = True
@@ -20,7 +20,7 @@ class UserSchemeAdd(BaseModel):
     """
     Схема создания пользователя.
     """
-    email: str = "email"
+    username: str = "username"
     password: str = "password"
 
 
