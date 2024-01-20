@@ -8,7 +8,7 @@ from app.core.config import settings
 from app.database import Database
 from app.database.database import engine
 
-app = FastAPI(openapi_url=f"{settings.API_V1_STR}/openapi.json")
+app = FastAPI(openapi_url=f"{settings.APP_API_PREFIX}/openapi.json")
 
 
 @app.middleware("http")
@@ -27,7 +27,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(api.api_router, prefix=settings.API_V1_STR)
+app.include_router(api.api_router, prefix=settings.APP_API_PREFIX)
 
 if __name__ == "__main__":
     uvicorn.run(app, host=settings.APP_HOST, port=settings.APP_PORT)
