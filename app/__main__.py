@@ -22,7 +22,7 @@ async def session_db(request: Request, call_next):
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=[settings.APP_HOST],
+    allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -30,4 +30,4 @@ app.add_middleware(
 app.include_router(api.api_router, prefix=settings.APP_API_PREFIX)
 
 if __name__ == "__main__":
-    uvicorn.run(app, host=settings.APP_HOST, port=settings.APP_PORT)
+    uvicorn.run(app, host="0.0.0.0", port=8000)

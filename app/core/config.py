@@ -7,8 +7,6 @@ class Settings(BaseSettings):
     )
 
     # APP
-    APP_HOST: str
-    APP_PORT: int
     APP_API_PREFIX: str
     APP_AUTH_SECRET: str
 
