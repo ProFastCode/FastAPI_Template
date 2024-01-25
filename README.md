@@ -19,6 +19,3 @@
 ### Для запуска воспользуйтесь ниже приведёнными командами.
 
 `python -m app` - Команда для запуска backend'а.
-
-
-# Deploy - https://github.com/FastCodeProfile/Deploy_FastAPI_Template
