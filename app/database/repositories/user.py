@@ -25,6 +25,6 @@ class UserRepo(Repository[User]):
         )
         return new_user
 
-    async def get_by_username(self, username: str) -> User:
+    async def get_by_username(self, username: str) -> User | None:
         user = await self.get_by_where(User.username == username)
         return user
