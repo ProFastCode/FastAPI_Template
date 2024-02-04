@@ -1,11 +1,9 @@
 """
-Репозитории базы данных.
+Модуль с репозиториями моделей базы данных.
 """
 
-from .abstract import Repository
 from .user import UserRepo
 
 __all__ = (
     'UserRepo',
-    'Repository',
 )

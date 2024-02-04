@@ -2,7 +2,11 @@
 Модуль для взаимодействия с базой данных.
 """
 
-from .database import Database
+from .database import Database, engine
 from .models import Base
 
-__all__ = ('Database', 'Base')
+__all__ = (
+    'Database',
+    'engine',
+    'Base',
+)

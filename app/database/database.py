@@ -2,7 +2,7 @@ from sqlalchemy.engine.url import URL
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
 from sqlalchemy.ext.asyncio import create_async_engine as _create_async_engine
 
-from app.core.config import settings
+from app.core import settings
 from .repositories import UserRepo
 
 
