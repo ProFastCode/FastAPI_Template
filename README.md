@@ -19,6 +19,3 @@
 ### Для запуска воспользуйтесь ниже приведёнными командами.
 
 `python -m app` - Команда для запуска backend'а.
-
-
-# Docker Deploy - https://github.com/FastCodeProfile/Deploy_Template
