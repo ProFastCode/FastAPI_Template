@@ -11,11 +11,11 @@ app.include_router(api.api_router, prefix=settings.APP_API_PREFIX)
 
 # TEST ACTIONS
 
-l = [
+list_one = [
     "das"
 ]
 
-l1 = ["asda"]
+list_two = ["asda"]
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
