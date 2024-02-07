@@ -3,7 +3,7 @@
 """
 
 import abc
-from typing import Generic, TypeVar
+from typing import Generic, TypeVar, Optional, List, Any
 
 import sqlalchemy as sa
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -29,7 +29,7 @@ class Repository(Generic[AbstractModel]):
         return (await self.session.execute(statement)).unique().scalar_one_or_none()
 
     async def get_many(
-            self, whereclause: list = None, limit: int = None, order_by=None
+            self, whereclause: Optional [List[Any]] = None, limit: int = None, order_by=None
     ):
         statement = sa.select(self.type_model).limit(limit).order_by(order_by)
         if whereclause:
