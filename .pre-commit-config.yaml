@@ -42,6 +42,7 @@ repos:
 
 # Чтобы сделать ваши неявные подсказки по необязательному типу совместимыми с PEP 484.
 -   repo: https://github.com/hauntsaninja/no_implicit_optional
+    rev: main
     hooks:
       - id: no-implicit-optional
 
