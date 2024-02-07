@@ -2,7 +2,7 @@ import uvicorn
 from fastapi import FastAPI
 
 from app import api
-from app.core.settings import settings
+from app.core import settings
 
 app = FastAPI(openapi_url=f"{settings.APP_API_PREFIX}/openapi.json")
 
