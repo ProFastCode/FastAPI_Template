@@ -17,7 +17,6 @@ repos:
     rev: 5.12.0
     hooks:
       - id: isort
-        exclude: __init__.py
         args: [ --profile, black, --filter-files ]
 
 # Обновляет синтаксис Python кода в соответствии с последними версиями
@@ -39,7 +38,6 @@ repos:
     rev: 6.0.0
     hooks:
     -   id: flake8
-        exclude: "__init__.py"
         args: ["--ignore=E501,F821", "--max-line-length=120"]
 
 # Проверка статических типов с помощью mypy
