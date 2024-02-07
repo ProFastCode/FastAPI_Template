@@ -40,6 +40,12 @@ repos:
     -   id: flake8
         args: ["--ignore=E501,F821", "--max-line-length=120"]
 
+# Чтобы сделать ваши неявные подсказки по необязательному типу совместимыми с PEP 484.
+-   repo: https://github.com/hauntsaninja/no_implicit_optional
+    rev: v1.0.0
+    hooks:
+      - id: no-implicit-optional
+
 # Проверка статических типов с помощью mypy
 -   repo: https://github.com/pre-commit/mirrors-mypy
     rev: v0.991
