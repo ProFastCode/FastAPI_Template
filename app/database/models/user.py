@@ -9,7 +9,7 @@ from .base import Base
 
 
 class User(Base):
-    username: Mapped[str] = mapped_column(sa.String, unique=False, nullable=False)
+    username: Mapped[str] = mapped_column(sa.String, unique=True, nullable=False)
     password: Mapped[str] = mapped_column(sa.String, unique=False, nullable=False)
 
     def __repr__(self):
