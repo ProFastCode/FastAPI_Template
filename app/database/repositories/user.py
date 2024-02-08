@@ -17,12 +17,11 @@ class UserRepo(Repository[User]):
         username: str | None = None,
         password: str | None = None,
     ) -> User:
-        new_user = await self.session.merge(
-            User(
-                username=username,
-                password=password,
-            )
-        )
+        new_user = User()
+        new_user.username = username
+        new_user.password = password
+        
+        new_user = await self.session.merge(new_user)
         return new_user
 
     async def get_by_username(self, username: str) -> User | None:
