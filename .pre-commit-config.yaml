@@ -27,7 +27,7 @@ repos:
     rev: v3.15.0
     hooks:
     -   id: pyupgrade
-    -   exclude: ^migrations/
+        exclude: ^migrations/
         args: [--py39-plus]
 -   repo: https://github.com/hhatto/autopep8
     rev: v2.0.4
@@ -37,7 +37,7 @@ repos:
     rev: 7.0.0
     hooks:
     -   id: flake8
-    -   exclude: ^migrations/
+        exclude: ^migrations/
 -   repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.8.0
     hooks:
