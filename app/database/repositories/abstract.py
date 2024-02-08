@@ -45,5 +45,5 @@ class Repository(Generic[AbstractModel]):
         await self.session.execute(statement)
 
     @abc.abstractmethod
-    async def new(self, *args, **kwargs) -> None:
+    async def new(self, *args, **kwargs) -> Base:
         ...
