@@ -28,6 +28,7 @@ repos:
     hooks:
     -   id: pyupgrade
         args: [--py39-plus]
+    -   exclude: ^migrations/
 -   repo: https://github.com/hhatto/autopep8
     rev: v2.0.4
     hooks:
@@ -36,9 +37,10 @@ repos:
     rev: 7.0.0
     hooks:
     -   id: flake8
+    -   exclude: ^migrations/
 -   repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.8.0
     hooks:
     -   id: mypy
         additional_dependencies: [types-all]
-        exclude: ^testing/resources/
+        exclude: ^migrations/
