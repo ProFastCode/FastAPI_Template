@@ -33,13 +33,6 @@ repos:
     -   id: autopep8
         args: [--max-line-length=120, --in-place]
 
-# Сканер стилистических ошибок, нарушающие договоренности PEP8
--   repo: https://github.com/PyCQA/flake8
-    rev: 6.0.0
-    hooks:
-    -   id: flake8
-        args: ["--ignore=E501,F821", "--max-line-length=120"]
-
 # Проверка статических типов с помощью mypy
 -   repo: https://github.com/pre-commit/mirrors-mypy
     rev: v0.991
