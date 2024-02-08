@@ -1,3 +1,5 @@
+from typing import Optional
+
 from sqlalchemy.engine.url import URL
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
 from sqlalchemy.ext.asyncio import create_async_engine as _create_async_engine
@@ -21,7 +23,7 @@ class Database:
     def __init__(
             self,
             session: AsyncSession,
-            user: UserRepo = None,
+            user: Optional[UserRepo] = None,
     ):
         self.session = session
         self.user = user or UserRepo(session=session)
