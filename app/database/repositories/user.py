@@ -22,6 +22,7 @@ class UserRepo(Repository[User]):
         new_user.password = password
         
         new_user = await self.session.merge(new_user)
+        await self.session.flush()
         return new_user
 
     async def get_by_username(self, username: str) -> User | None:
