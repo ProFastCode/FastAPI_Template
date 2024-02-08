@@ -1,4 +1,4 @@
-from typing import Annotated, Union
+from typing import Annotated
 
 from fastapi import Form, HTTPException, status
 from jose import jwt, JWTError
