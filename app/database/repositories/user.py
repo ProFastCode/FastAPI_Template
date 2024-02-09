@@ -20,7 +20,7 @@ class UserRepo(Repository[User]):
         new_user = User()
         new_user.username = username
         new_user.password = password
-        
+
         new_user = await self.session.merge(new_user)
         await self.session.flush()
         return new_user

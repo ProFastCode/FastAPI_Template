@@ -9,14 +9,14 @@ from app.database import Database
 
 class OAuth2PasswordRequestForm:
     def __init__(
-            self,
-            *,
-            grant_type: Annotated[Union[str, None], Form(pattern="password")] = None,
-            username: Annotated[str, Form()],
-            password: Annotated[str, Form()],
-            scope: Annotated[str, Form()] = "",
-            client_id: Annotated[Union[str, None], Form()] = None,
-            client_secret: Annotated[Union[str, None], Form()] = None,
+        self,
+        *,
+        grant_type: Annotated[Union[str, None], Form(pattern="password")] = None,
+        username: Annotated[str, Form()],
+        password: Annotated[str, Form()],
+        scope: Annotated[str, Form()] = "",
+        client_id: Annotated[Union[str, None], Form()] = None,
+        client_secret: Annotated[Union[str, None], Form()] = None,
     ):
         """
         Представляет форму запроса пароля OAuth 2.0.

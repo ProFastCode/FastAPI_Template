@@ -45,9 +45,6 @@ def create_access_token(username: str):
     Returns:
         str: Закодированный JWT токен в виде строки.
     """
-    data = dict(
-        username=username,
-        exp=datetime.utcnow() + timedelta(minutes=120)
-    )
+    data = dict(username=username, exp=datetime.utcnow() + timedelta(minutes=120))
     encoded_jwt = jwt.encode(data, settings.APP_AUTH_SECRET, algorithm="HS256")
     return encoded_jwt

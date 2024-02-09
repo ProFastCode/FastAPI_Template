@@ -10,7 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..models import Base
 
-AbstractModel = TypeVar('AbstractModel')
+AbstractModel = TypeVar("AbstractModel")
 
 
 class Repository(Generic[AbstractModel]):
@@ -29,7 +29,10 @@ class Repository(Generic[AbstractModel]):
         return (await self.session.execute(statement)).unique().scalar_one_or_none()
 
     async def get_many(
-            self, whereclause: Optional [List[Any]] = None, limit: Optional[int] = None, order_by=None
+        self,
+        whereclause: Optional[List[Any]] = None,
+        limit: Optional[int] = None,
+        order_by=None,
     ):
         statement = sa.select(self.type_model).limit(limit).order_by(order_by)
         if whereclause:
@@ -41,7 +44,11 @@ class Repository(Generic[AbstractModel]):
         await self.session.execute(statement)
 
     async def update(self, ident: int, **values):
-        statement = sa.update(self.type_model).values(**values).where(self.type_model.id == ident)
+        statement = (
+            sa.update(self.type_model)
+            .values(**values)
+            .where(self.type_model.id == ident)
+        )
         await self.session.execute(statement)
 
     @abc.abstractmethod

@@ -17,5 +17,7 @@ async def get_db() -> Database:
         return Database(session)
 
 
-async def get_current_user(token: str = Depends(oauth2_scheme), db: Database = Depends(get_db)):
+async def get_current_user(
+    token: str = Depends(oauth2_scheme), db: Database = Depends(get_db)
+):
     return await auth.authorization(token, db)

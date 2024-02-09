@@ -43,7 +43,10 @@ async def new(user: UserSchemeAdd, db: Database = Depends(depends.get_db)):
 
 
 @router.post("/token", response_model=UserTokenScheme)
-async def token(form_data: auth.OAuth2PasswordRequestForm = Depends(), db: Database = Depends(depends.get_db)):
+async def token(
+    form_data: auth.OAuth2PasswordRequestForm = Depends(),
+    db: Database = Depends(depends.get_db),
+):
     """
     Получение токена доступа для пользователя.
     """
