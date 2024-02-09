@@ -17,7 +17,6 @@ ruff:
 run:
 	poetry run python -m app
 
-# Alembic utils
 .PHONY: generate
 generate:
 	poetry run alembic revision --autogenerate
