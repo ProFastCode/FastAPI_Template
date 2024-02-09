@@ -14,7 +14,10 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl=f"{settings.APP_API_PREFIX}/users/
 
 async def get_db() -> Database:
     async with AsyncSession(bind=engine, expire_on_commit=False) as session:
-        return Database(session)
+        try:
+            yield Database(session)
+        finally:
+            await session.close()
 
 
 async def get_current_user(token: str = Depends(oauth2_scheme), db: Database = Depends(get_db)):
