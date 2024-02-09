@@ -31,7 +31,7 @@ jobs:
       run: pip install --upgrade autopep8
 
     - name: Run autopep8
-      run: autopep8 --in-place --aggressive --aggressive
+      run: autopep8 --in-place --aggressive --aggressive /app
 
     - name: Commit changes
       env:
