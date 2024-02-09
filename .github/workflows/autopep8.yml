@@ -30,14 +30,14 @@ jobs:
     - name: Install autopep8
       run: pip install --upgrade autopep8
 
-    - name: Run autopep8
+    - name: Run AutoPEP8
       run: autopep8 --in-place --aggressive --aggressive --recursive app
 
     - name: Commit changes
       env:
         GITHUB_ACTOR: ${{ github.actor }}
         COMMIT_EMAIL: ${{ github.actor }}@users.noreply.github.com
-      run: echo $GITHUB_AUTOR
-      #git config --global user.name $GITHUB_ACTOR
-      #git config --global user.email $COMMIT_EMAIL
-      #git commit -am "Pre-commit"
+      run: |
+        git config --global user.name $GITHUB_ACTOR
+        git config --global user.email $COMMIT_EMAIL
+        git commit -am "AutoPEP8"
