@@ -27,10 +27,8 @@ jobs:
 
       - name: Commit changes
         run: |
-          git config --global user.email "github-actions@github.com"
+          git config --global user.email "fast.code.auth@gmail.com"
           git config --global user.name "GitHub Actions"
-          git config --global credential.helper "store --file=.git-credentials"
-          echo "https://github.com/${GITHUB_REPOSITORY}.git" > .git-credentials
           git add .
           git diff-index --quiet HEAD || git commit -m "Auto-format code with Black"
           git push https://$GH_TOKEN@github.com/${GITHUB_REPOSITORY}.git HEAD:$GITHUB_REF
