@@ -34,7 +34,12 @@ jobs:
       run: black .
 
     - name: Apply changes
+      env:
+        GITHUB_ACTOR: ${{ github.actor }}
+        COMMIT_EMAIL: ${{ github.actor }}@users.noreply.github.com
       run: |
+        git config --global user.name $GITHUB_ACTOR
+        git config --global user.email $COMMIT_EMAIL
         git add .
         git diff --quiet && git diff --staged --quiet || git commit -m "Apply Black formatting"
 
