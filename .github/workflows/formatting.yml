@@ -32,3 +32,9 @@ jobs:
 
     - name: Run black
       run: black .
+
+    - name: Apply changes
+      run: |
+        git add .
+        git diff --quiet && git diff --staged --quiet || git commit -m "Apply Black formatting"
+
