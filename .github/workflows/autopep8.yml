@@ -15,7 +15,7 @@ on:
       - 'migrations/*'
 
 jobs:
-  pre-commit:
+  formatting:
     runs-on: ubuntu-latest
 
     steps:
