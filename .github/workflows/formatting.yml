@@ -32,3 +32,10 @@ jobs:
 
     - name: Run black
       run: black .
+
+    - name: Commit changes
+      run: |
+        git config --global user.email "github-actions@github.com"
+        git config --global user.name "GitHub Actions"
+        git add .
+        git diff-index --quiet HEAD || git commit -m "Auto-format code with Black"
