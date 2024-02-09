@@ -1,3 +1,3 @@
 """
-Initial project v1
+Initial project v2
 """
