@@ -1,0 +1,41 @@
+name: Pre-commit
+
+on:
+  push:
+    branches: [ "main" ]
+    paths-ignore:
+      - '**.md'
+      - '.github/**'
+  pull_request:
+    branches: [ "main" ]
+    paths-ignore:
+      - '**.md'
+      - '.github/**'
+
+jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'  # Specify the Python version
+
+    - name: Install autopep8
+      run: pip install --upgrade autopep8
+
+    - name: Run autopep8
+      run: autopep8 --in-place --aggressive --aggressive
+
+    - name: Commit changes
+      env:
+        GITHUB_ACTOR: ${{ github.actor }}
+        COMMIT_EMAIL: ${{ github.actor }}@users.noreply.github.com
+      run: echo $GITHUB_AUTOR
+      #git config --global user.name $GITHUB_ACTOR
+      #git config --global user.email $COMMIT_EMAIL
+      #git commit -am "Pre-commit"
