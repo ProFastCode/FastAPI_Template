@@ -30,3 +30,12 @@ jobs:
 
     - name: Run pre-commit
       run: pre-commit run --all-files
+
+    - name: Commit changes
+      env:
+        GITHUB_ACTOR: ${{ github.actor }}
+        COMMIT_EMAIL: ${{ github.actor }}@users.noreply.github.com
+      run: echo $GITHUB_AUTOR
+      #git config --global user.name $GITHUB_ACTOR
+      #git config --global user.email $COMMIT_EMAIL
+      #git commit -am "Pre-commit"
