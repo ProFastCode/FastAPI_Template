@@ -2,11 +2,11 @@
 Модуль для взаимодействия с базой данных.
 """
 
-from .database import Database, engine
+from .database import Database, new_session
 from .models import Base
 
 __all__ = (
-    "Database",
-    "engine",
     "Base",
+    "Database",
+    "new_session",
 )

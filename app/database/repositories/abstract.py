@@ -3,7 +3,7 @@
 """
 
 import abc
-from typing import Generic, TypeVar, Optional, List, Any
+from typing import Generic, TypeVar, Sequence
 
 import sqlalchemy as sa
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -21,29 +21,26 @@ class Repository(Generic[AbstractModel]):
         self.type_model = type_model
         self.session = session
 
-    async def get(self, ident: int | str) -> AbstractModel:
+    async def get(self, ident: int | str) -> AbstractModel | None:
         return await self.session.get(entity=self.type_model, ident=ident)
 
-    async def get_by_where(self, whereclause) -> AbstractModel | None:
-        statement = sa.select(self.type_model).where(whereclause)
+    async def get_by_where(self, where_clause: list) -> AbstractModel | None:
+        statement = sa.select(self.type_model).where(sa.and_(*where_clause))
         return (await self.session.execute(statement)).unique().scalar_one_or_none()
 
     async def get_many(
-        self,
-        whereclause: Optional[List[Any]] = None,
-        limit: Optional[int] = None,
-        order_by=None,
-    ):
+        self, where_clause: list = None, limit: int = None, order_by=None
+    ) -> Sequence[Base]:
         statement = sa.select(self.type_model).limit(limit).order_by(order_by)
-        if whereclause:
-            statement = statement.where(sa.and_(*whereclause))
+        if where_clause:
+            statement = statement.where(sa.and_(*where_clause))
         return (await self.session.scalars(statement)).unique().all()
 
-    async def delete(self, whereclause) -> None:
-        statement = sa.delete(self.type_model).where(whereclause)
+    async def delete(self, whereclause: list) -> None:
+        statement = sa.delete(self.type_model).where(sa.and_(*whereclause))
         await self.session.execute(statement)
 
-    async def update(self, ident: int, **values):
+    async def update(self, ident: int, **values) -> None:
         statement = (
             sa.update(self.type_model)
             .values(**values)
@@ -52,5 +49,4 @@ class Repository(Generic[AbstractModel]):
         await self.session.execute(statement)
 
     @abc.abstractmethod
-    async def new(self, *args, **kwargs) -> Base:
-        ...
+    async def new(self, *args, **kwargs) -> None: ...

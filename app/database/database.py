@@ -1,29 +1,26 @@
 from typing import Optional
 
-from sqlalchemy.engine.url import URL
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
-from sqlalchemy.ext.asyncio import create_async_engine as _create_async_engine
+from sqlalchemy.ext.asyncio import create_async_engine
 
 from app.core import settings
-from .repositories import UserRepo
+from . import repositories as repos
+
+engine: AsyncEngine = create_async_engine(
+    settings.pg_dns, echo=False, pool_pre_ping=True
+)
 
 
-def create_async_engine(url: URL | str) -> AsyncEngine:
-    return _create_async_engine(url=url, echo=False, pool_pre_ping=True)
-
-
-engine = create_async_engine(settings.pg_dns)
+async def new_session() -> AsyncSession:
+    async with AsyncSession(bind=engine, expire_on_commit=False) as session:
+        return session
 
 
 class Database:
-    session: AsyncSession
-
-    user: UserRepo
-
     def __init__(
         self,
-        session: AsyncSession,
-        user: Optional[UserRepo] = None,
+        session: Optional[AsyncSession] = None,
     ):
         self.session = session
-        self.user = user or UserRepo(session=session)
+
+        self.user = repos.UserRepo(session=session)

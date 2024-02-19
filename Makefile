@@ -6,8 +6,8 @@ help:
 	@echo "AVAILABLE COMMANDS"
 	@echo "  run		Start the app"
 	@echo "  lint		Reformat code"
-	@echo "  migrate	Alembic migrate database"
-	@echo "  generate	Alembic generate database"
+	@echo "  migrate		Alembic migrate database"
+	@echo "  generate		Alembic generate database"
 
 .PHONY: lint
 lint:
@@ -17,11 +17,10 @@ lint:
 run:
 	poetry run python -m app
 
-.PHONY: migrate
-migrate:
-	poetry run alembic upgrade head
-
 .PHONY: generate
 generate:
 	poetry run alembic revision --autogenerate
 
+.PHONY: migrate
+migrate:
+	poetry run alembic upgrade head
