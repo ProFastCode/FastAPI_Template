@@ -19,7 +19,7 @@ async def new_session() -> AsyncSession:
 class Database:
     def __init__(
         self,
-        session: Optional[AsyncSession] = None,
+        session: AsyncSession,
     ):
         self.session = session
 
