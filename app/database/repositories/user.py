@@ -19,14 +19,14 @@ class UserRepo(Repository[models.User]):
         username: str,
         password: str,
     ) -> models.User:
-        new_user = models.User()
-        new_user.username = username
-        new_user.password = password
+        model = models.User()
+        model.username = username
+        model.password = password
 
-        new_user = await self.session.merge(new_user)
+        new_entry = await self.session.merge(model)
         await self.session.flush()
-        return new_user
+        return new_entry
 
     async def get_by_username(self, username: str) -> models.User | None:
-        user = await self.get_by_where(self.type_model.username == username)
-        return user
+        entry = await self.get_by_where(self.type_model.username == username)
+        return entry

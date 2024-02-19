@@ -30,14 +30,14 @@ class Repository(Generic[AbstractModel]):
 
     async def get_many(
         self, where_clause: list = None, limit: int = None, order_by=None
-    ) -> Sequence[Base]:
+    ):
         statement = sa.select(self.type_model).limit(limit).order_by(order_by)
         if where_clause:
             statement = statement.where(sa.and_(*where_clause))
         return (await self.session.scalars(statement)).unique().all()
 
-    async def delete(self, whereclause: list) -> None:
-        statement = sa.delete(self.type_model).where(sa.and_(*whereclause))
+    async def delete(self, where_clause: list) -> None:
+        statement = sa.delete(self.type_model).where(sa.and_(*where_clause))
         await self.session.execute(statement)
 
     async def update(self, ident: int, **values) -> None:
