@@ -1,10 +1,12 @@
 """
-Модуль где подключаются endpoints user
+User API Module
 """
 
 from fastapi import APIRouter
 
-from . import endpoints
+from . import get, new
+from ..tags import Tags
 
-router = APIRouter(prefix="/users", tags=["users"])
-router.include_router(endpoints.router)
+router = APIRouter(prefix="/users", tags=[Tags.users])
+router.include_router(new.router)
+router.include_router(get.router)

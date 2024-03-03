@@ -1,3 +1,7 @@
+"""
+Init App Module
+"""
+
 from fastapi import FastAPI
 
 from app import api

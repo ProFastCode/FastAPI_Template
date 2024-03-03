@@ -1,11 +1,11 @@
 """
-Pydantic схемы.
+Pydantic schemas
 """
 
-from .users import UserScheme, UserSchemeAdd, UserTokenScheme
+from .tokens import TokenAuth, TokenPair
+from .users import UserGet, UserNew
 
 __all__ = (
-    "UserScheme",
-    "UserSchemeAdd",
-    "UserTokenScheme",
+    "UserGet", "UserNew",
+    "TokenAuth", "TokenPair",
 )

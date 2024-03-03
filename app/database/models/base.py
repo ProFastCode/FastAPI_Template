@@ -1,5 +1,5 @@
 """
-Базовая модель от которой наследуются остальные модели.
+Base Model
 """
 
 from sqlalchemy import Integer, MetaData

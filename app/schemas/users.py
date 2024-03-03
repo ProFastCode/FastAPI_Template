@@ -1,38 +1,20 @@
 """
-Схемы для пользователя.
+Schemas Users
 """
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
-class UserScheme(BaseModel):
-    """
-    Схема, которую возвращает бэк.
-    """
-
-    id: int = 0
-    username: str = "username"
+class User(BaseModel):
+    username: str = Field("username", title="Username")
 
     class Config:
         from_attributes = True
 
 
-class UserSchemeAdd(BaseModel):
-    """
-    Схема создания пользователя.
-    """
-
-    username: str = "username"
-    password: str = "password"
+class UserGet(User):
+    id: int = Field(0, title="User ID")
 
 
-class UserTokenScheme(BaseModel):
-    """
-    Схема токена пользователя.
-    """
-
-    access_token: str
-    token_type: str = "Bearer"
-
-    class Config:
-        populate_by_name = True
+class UserNew(User):
+    password: str = Field("password", title="Password")

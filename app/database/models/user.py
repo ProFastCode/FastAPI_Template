@@ -1,5 +1,5 @@
 """
-Модель пользователя.
+User Model
 """
 
 import sqlalchemy as sa

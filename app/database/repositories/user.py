@@ -1,5 +1,5 @@
 """
-Репозиторий пользователя.
+User Repository
 """
 
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -28,5 +28,5 @@ class UserRepo(Repository[models.User]):
         return new_entry
 
     async def get_by_username(self, username: str) -> models.User | None:
-        entry = await self.get_by_where(self.type_model.username == username)
+        entry = await self.get_by_where([self.type_model.username == username])
         return entry

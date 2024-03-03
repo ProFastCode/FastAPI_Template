@@ -1,5 +1,5 @@
 """
-Модуль для взаимодействия с базой данных.
+Database module
 """
 
 from .database import Database, new_session

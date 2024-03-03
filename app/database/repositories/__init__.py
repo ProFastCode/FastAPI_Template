@@ -1,5 +1,5 @@
 """
-Модуль с репозиториями моделей базы данных.
+Database Repositories Module
 """
 
 from .user import UserRepo

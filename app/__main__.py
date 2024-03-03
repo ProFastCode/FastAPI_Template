@@ -1,3 +1,7 @@
+"""
+App Module
+"""
+
 import uvicorn
 
 from app import app

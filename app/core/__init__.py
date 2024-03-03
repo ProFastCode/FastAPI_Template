@@ -1,5 +1,5 @@
 """
-Ядро FastAPI приложения.
+Core App Module
 """
 
 from .settings import settings

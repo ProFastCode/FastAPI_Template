@@ -1,4 +1,6 @@
-from typing import Optional
+"""
+Database module
+"""
 
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
 from sqlalchemy.ext.asyncio import create_async_engine
@@ -7,7 +9,7 @@ from app.core import settings
 from . import repositories as repos
 
 engine: AsyncEngine = create_async_engine(
-    settings.pg_dns, echo=False, pool_pre_ping=True
+    settings.pg_url, echo=False, pool_pre_ping=True
 )
 
 
@@ -18,8 +20,8 @@ async def new_session() -> AsyncSession:
 
 class Database:
     def __init__(
-        self,
-        session: AsyncSession,
+            self,
+            session: AsyncSession,
     ):
         self.session = session
 

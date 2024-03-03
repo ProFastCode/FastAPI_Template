@@ -1,5 +1,5 @@
 """
-Модуль с моделями базы данных.
+Database Models Module
 """
 
 from .base import Base
