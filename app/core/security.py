@@ -5,24 +5,24 @@ from jose import jwt, JWTError
 from passlib.context import CryptContext
 
 from app import schemas
+from app.core import settings
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 ALGORITHM = "HS256"
-SECRET_KEY = "Q&#YFI&T^U567GK#^&EK&"
 
 
 def create_token(action: str, payload: dict, minutes: int) -> str:
     data = dict(
         action=action, payload=payload, exp=datetime.now() + timedelta(minutes=minutes)
     )
-    encoded_jwt = jwt.encode(data, SECRET_KEY, algorithm=ALGORITHM)
+    encoded_jwt = jwt.encode(data, settings.APP_AUTH_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
 
 def decode_token(token: str) -> dict:
     try:
-        data = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        data = jwt.decode(token, settings.APP_AUTH_KEY, algorithms=[ALGORITHM])
         exp: float = data.get("exp")
 
         if datetime.fromtimestamp(exp) > datetime.now():

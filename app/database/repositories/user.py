@@ -27,6 +27,9 @@ class UserRepo(Repository[models.User]):
         await self.session.flush()
         return new_entry
 
-    async def get_by_username(self, username: str) -> models.User | None:
-        entry = await self.get_by_where([self.type_model.username == username])
+    async def get_by_username(self, username: str, password: str | None = None) -> models.User | None:
+        where_clause = [self.type_model.username == username]
+        if password:
+            where_clause.append(self.type_model.password == password)
+        entry = await self.get_by_where(where_clause)
         return entry

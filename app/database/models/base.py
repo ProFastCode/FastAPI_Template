@@ -2,11 +2,13 @@
 Base Model
 """
 
-from sqlalchemy import Integer, MetaData
+from datetime import datetime as dt
+
+import sqlalchemy as sa
 from sqlalchemy.ext.declarative import as_declarative
 from sqlalchemy.orm import Mapped, declared_attr, mapped_column
 
-metadata = MetaData(
+metadata = sa.MetaData(
     naming_convention={
         "ix": "ix_%(column_0_label)s",
         "uq": "uq_%(table_name)s_%(column_0_name)s",
@@ -26,4 +28,11 @@ class Base:
 
     __allow_unmapped__ = False
 
-    id: Mapped[int] = mapped_column(Integer, autoincrement=True, primary_key=True)
+    id: Mapped[int] = mapped_column(sa.Integer, autoincrement=True, primary_key=True)
+    create_at: Mapped[str] = mapped_column(sa.DateTime, unique=False, default=dt.now())
+    update_at: Mapped[str] = mapped_column(
+        sa.DateTime, unique=False, onupdate=dt.now(), default=dt.now()
+    )
+
+    def __repr__(self):
+        return f"{__class__.__name__}({self.id=})"

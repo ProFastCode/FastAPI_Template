@@ -23,7 +23,9 @@ async def service(service_key: str):
         )
 
 
-async def get_current_user(request: Request, db: Database = Depends(get_db)) -> models.User:
+async def get_current_user(
+    request: Request, db: Database = Depends(get_db)
+) -> models.User:
     if not (token_short := request.cookies.get("_token_short")):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

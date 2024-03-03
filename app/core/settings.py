@@ -12,6 +12,7 @@ class Settings(BaseSettings):
     )
 
     # APP
+    APP_AUTH_KEY: str = "app_auth_key"
     APP_API_PREFIX: str = "/api"
     APP_SERVICE_KEY: str = "app_service_key"
 
@@ -25,12 +26,12 @@ class Settings(BaseSettings):
     @property
     def pg_url(self) -> URL:
         url = URL.create(
-            'postgresql+asyncpg',
+            "postgresql+asyncpg",
             self.POSTGRES_USER,
             self.POSTGRES_PASSWORD,
             self.POSTGRES_HOST,
             self.POSTGRES_PORT,
-            self.POSTGRES_DATABASE
+            self.POSTGRES_DATABASE,
         )
         return url
 

@@ -13,7 +13,9 @@ router = APIRouter()
 
 
 @router.post("/")
-async def new(user: schemas.UserNew, db: Database = Depends(depends.get_db)) -> schemas.UserGet:
+async def new(
+    user: schemas.UserNew, db: Database = Depends(depends.get_db)
+) -> schemas.UserGet:
     """
     Создать нового пользователя:
 

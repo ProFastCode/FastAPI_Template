@@ -20,9 +20,10 @@ async def new_session() -> AsyncSession:
 
 class Database:
     def __init__(
-            self,
-            session: AsyncSession,
+        self,
+        session: AsyncSession,
     ):
         self.session = session
 
         self.user = repos.UserRepo(session=session)
+        self.user_activity = repos.UserActivityRepo(session=session)

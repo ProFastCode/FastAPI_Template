@@ -3,7 +3,7 @@ Abstract Repository
 """
 
 import abc
-from typing import Generic, TypeVar, Sequence
+from typing import Generic, TypeVar
 
 import sqlalchemy as sa
 from sqlalchemy.ext.asyncio import AsyncSession
