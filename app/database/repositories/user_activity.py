@@ -36,8 +36,8 @@ class UserActivityRepo(Repository[models.UserActivity]):
     async def get_many_by_action(
         self, action: str, user_id: int | None = None
     ) -> list[models.UserActivity] | None:
-        where_clause = [self.type_model.action == action]
+        where_clauses = [self.type_model.action == action]
         if user_id:
-            where_clause.append(self.type_model.user_id == user_id)
-        entries = await self.get_many(where_clause)
+            where_clauses.append(self.type_model.user_id == user_id)
+        entries = await self.get_many(where_clauses=where_clauses)
         return entries

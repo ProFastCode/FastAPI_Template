@@ -2,7 +2,6 @@ from fastapi import APIRouter, Depends, HTTPException, status
 
 from app import schemas
 from app.api import depends
-from app.api.tags import Tags
 from app.core import security
 from app.database import Database
 
