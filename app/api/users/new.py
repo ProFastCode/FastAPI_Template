@@ -27,7 +27,7 @@ async def new(
     if await db.user.get_by_username(user.username):
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
-            detail="Такой пользователь существует.",
+            detail="Username is already taken.",
         )
 
     user = await db.user.new(user.username, user.password)
