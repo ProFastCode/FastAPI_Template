@@ -7,26 +7,30 @@ from pydantic import BaseModel, Field
 
 class TokenAuth(BaseModel):
     token_auth: str = Field(
-        "token_auth",
-        title="Токен авторизации",
-        description="Действует 15мин. необходим для получения пары токенов.",
+        examples=["token_auth"],
+        description="Необходим для получения пары-токенов, действует 15мин.",
     )
 
     class Config:
         from_attributes = True
 
 
-class TokenPair(BaseModel):
+class TokenLong(BaseModel):
     token_long: str = Field(
-        "token_long",
-        title="Длинный токен",
-        description="Действует 1год, необходим для получения нового короткого токена.",
+        examples=["token_long"],
+        description="Необходим для получения нового короткого токена, действует 1год.",
     )
+
+
+class TokenShort(BaseModel):
     token_short: str = Field(
-        "token_short",
-        title="Короткий токен",
-        description="Действует 2часа., необходим для запросов к API",
+        examples=["token_short"],
+        description="Необходим для запросов к API, действует 2часа.",
     )
 
     class Config:
         from_attributes = True
+
+
+class TokenPair(TokenLong, TokenShort):
+    pass

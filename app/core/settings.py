@@ -14,7 +14,6 @@ class Settings(BaseSettings):
     # APP
     APP_AUTH_KEY: str = "app_auth_key"
     APP_API_PREFIX: str = "/api"
-    APP_SERVICE_KEY: str = "app_service_key"
 
     # DATABASE
     POSTGRES_HOST: str = "localhost"

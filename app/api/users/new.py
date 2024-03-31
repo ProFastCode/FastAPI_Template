@@ -12,24 +12,22 @@ from app.database import Database
 router = APIRouter()
 
 
-@router.post("/")
-async def new(
-    user: schemas.UserNew, db: Database = Depends(depends.get_db)
-) -> schemas.UserGet:
+@router.post("/", response_model=schemas.UserGet)
+async def new(user: schemas.UserNew, db: Database = Depends(depends.get_db)):
     """
     Создать нового пользователя:
 
     - **id**: ID-пользователя
-    - **username**: Username-Пользователя
+    - **email**: Email-Пользователя
     - **password**: Password-Пользователя
     """
 
-    if await db.user.get_by_username(user.username):
+    if await db.user.get_by_email(user.email):
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
-            detail="Username is already taken.",
+            detail="User is already taken.",
         )
 
-    user = await db.user.new(user.username, user.password)
+    user = await db.user.new(user.email, user.password)
     await db.session.commit()
-    return schemas.UserGet(**user.__dict__)
+    return user

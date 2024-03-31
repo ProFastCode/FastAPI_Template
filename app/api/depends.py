@@ -2,13 +2,15 @@
 Dependency Module
 """
 
-from fastapi import Depends, HTTPException, status, Request
+from typing import AsyncGenerator
 
-from app.core import security, settings
+from fastapi import Depends, HTTPException, status, Cookie
+
+from app.core import security
 from app.database import Database, new_session, models
 
 
-async def get_db() -> Database:
+async def get_db() -> AsyncGenerator[Database]:
     session = await new_session()
     try:
         yield Database(session)
@@ -16,17 +18,10 @@ async def get_db() -> Database:
         await session.close()
 
 
-async def service(service_key: str):
-    if settings.APP_SERVICE_KEY != service_key:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid service key"
-        )
-
-
 async def get_current_user(
-    request: Request, db: Database = Depends(get_db)
+    token_short: str = Cookie(), db: Database = Depends(get_db)
 ) -> models.User:
-    if not (token_short := request.cookies.get("_token_short")):
+    if not token_short:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Short token not transferred",

@@ -11,12 +11,12 @@ from app.database import models
 router = APIRouter()
 
 
-@router.get("/")
-async def get(user: models.User = Depends(depends.get_current_user)) -> schemas.UserGet:
+@router.get("/", response_model=schemas.UserGet)
+async def get(user: models.User = Depends(depends.get_current_user)):
     """
     Получить информацию о пользователе:
 
     - **id**: ID-пользователя
     - **username**: Username-Пользователя
     """
-    return schemas.UserGet(**user.__dict__)
+    return user

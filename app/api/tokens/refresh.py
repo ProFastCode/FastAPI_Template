@@ -8,20 +8,20 @@ from app.database import Database
 router = APIRouter()
 
 
-@router.get("/pair/", response_model=schemas.TokenPair)
-async def new_pair_tokens(
+@router.get("/refresh/", response_model=schemas.TokenShort)
+async def refresh_short_token(
     request: Request,
-    auth_token: str,
+    long_token: str,
     user_agent: str = Header(),
     db: Database = Depends(depends.get_db),
 ):
-    token_dict = security.decode_token(auth_token)
-    payload = token_dict.get("payload")
+    long_token_data = security.decode_token(long_token)
+    payload = long_token_data.get("payload")
 
-    if token_dict.get("action") != "token_auth":
+    if long_token_data.get("action") != "token_long":
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="This must be an authorization token",
+            detail="This must be an long token",
         )
 
     if not (user := await db.user.get(payload.get("id"))):
@@ -29,13 +29,14 @@ async def new_pair_tokens(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found"
         )
 
-    token_pair = security.create_token_pair(payload)
+    token_short = security.create_token_short(payload)
     await db.user_activity.new(
-        user_id=user.id,
-        action="new_pair_tokens",
-        comment="Новая пара токенов",
+        user.id,
+        "refresh_short_token",
+        "Обновлён короткий токен",
         user_agent=user_agent,
         ip=request.client.host,
     )
     await db.session.commit()
-    return token_pair
+
+    return token_short

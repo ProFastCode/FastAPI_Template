@@ -16,21 +16,21 @@ class UserRepo(Repository[models.User]):
 
     async def new(
         self,
-        username: str,
+        email: str,
         password: str,
     ) -> models.User:
         model = models.User()
-        model.username = username
+        model.email = email
         model.password = password
 
         new_entry = await self.session.merge(model)
         await self.session.flush()
         return new_entry
 
-    async def get_by_username(
-        self, username: str, password: str | None = None
+    async def get_by_email(
+        self, email: str, password: str | None = None
     ) -> models.User | None:
-        where_clauses = [self.type_model.username == username]
+        where_clauses = [self.type_model.email == email]
         if password:
             where_clauses.append(self.type_model.password == password)
         entry = await self.get(where_clauses=where_clauses)

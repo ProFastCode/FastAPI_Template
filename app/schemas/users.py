@@ -2,19 +2,19 @@
 Schemas Users
 """
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, EmailStr
 
 
 class User(BaseModel):
-    username: str = Field("username", title="Username")
+    email: EmailStr = Field(examples=["fast.code.auth@gmail.com"])
 
     class Config:
         from_attributes = True
 
 
 class UserGet(User):
-    id: int = Field(0, title="User ID")
+    id: int = Field(examples=[0])
 
 
 class UserNew(User):
-    password: str = Field("password", title="Password")
+    password: str = Field(examples=["12345"])
