@@ -20,7 +20,7 @@ class TokenPair(BaseModel):
     token_long: str = Field(
         "token_long",
         title="Длинный токен",
-        description="Действует  1год., необходим для получения нового короткого токена.",
+        description="Действует 1год, необходим для получения нового короткого токена.",
     )
     token_short: str = Field(
         "token_short",
