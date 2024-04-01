@@ -8,28 +8,20 @@ from app.database import Database
 router = APIRouter()
 
 
-@router.get("/refresh/", response_model=schemas.TokenShort)
+@router.post("/refresh/", response_model=schemas.ShortToken)
 async def refresh_short_token(
     request: Request,
     long_token: str,
     db: Database = Depends(depends.get_db),
 ):
     user_agent = request.headers.get("User-Agent")
-    long_token_data = security.decode_token(long_token)
-    payload = long_token_data.get("payload")
-
-    if long_token_data.get("action") != "token_long":
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="This must be an long token",
-        )
-
+    payload = security.decode_long_token(long_token)
     if not (user := await db.user.get(payload.get("id"))):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found"
         )
 
-    token_short = security.create_token_short(payload)
+    short_token = security.create_short_token(payload)
     await db.user_activity.new(
         user.id,
         "refresh_short_token",
@@ -38,5 +30,4 @@ async def refresh_short_token(
         ip=request.client.host,
     )
     await db.session.commit()
-
-    return token_short
+    return short_token

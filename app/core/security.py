@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
+from enum import Enum
 
 from fastapi import HTTPException, status
-
 from jose import jwt, JWTError
 from passlib.context import CryptContext
 
@@ -13,45 +13,77 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 ALGORITHM = "HS256"
 
 
-def create_token(action: str, payload: dict, minutes: int) -> str:
+class TokenType(Enum):
+    AUTH = (0, "This must be an authorization token")
+    LONG = (1, "This must be an long token")
+    SHORT = (2, "You did not transfer a short token")
+
+
+def create_token(token_type: TokenType, payload: dict, minutes: int) -> str:
     data = dict(
-        action=action, payload=payload, exp=datetime.now() + timedelta(minutes=minutes)
+        token_type=token_type.value[0], payload=payload, exp=datetime.now() + timedelta(minutes=minutes)
     )
     encoded_jwt = jwt.encode(data, settings.APP_AUTH_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
 
-def decode_token(token: str) -> dict:
+def decode_token(token_type: TokenType, token: str) -> dict:
     try:
         data = jwt.decode(token, settings.APP_AUTH_KEY, algorithms=[ALGORITHM])
         exp: float = data.get("exp")
-
-        if datetime.fromtimestamp(exp) > datetime.now():
-            return data
+        if not (datetime.fromtimestamp(exp) > datetime.now()):
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Your short token have expired",
+            )
+        if data.get("token_type") != token_type.value[0]:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail=token_type.value[1],
+            )
+        return data
     except JWTError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Failed to parse token"
         )
 
 
-def create_token_auth(payload: dict) -> schemas.TokenAuth:
-    token_auth = create_token("token_auth", payload, 15)
-    return schemas.TokenAuth(token_auth=token_auth)
+def create_auth_token(payload: dict) -> schemas.AuthToken:
+    auth_token = create_token(TokenType.AUTH, payload, 15)
+    return schemas.AuthToken(auth_token=auth_token)
 
 
-def create_token_long(payload: dict) -> schemas.TokenLong:
-    token_long = create_token("token_long", payload, minutes=52560)
-    return schemas.TokenLong(token_long=token_long)
+def decode_auth_token(token: str) -> dict:
+    token_dict = decode_token(TokenType.AUTH, token)
+    payload = token_dict.get("payload")
+    return payload
 
 
-def create_token_short(payload: dict) -> schemas.TokenShort:
-    token_short = create_token("token_short", payload, minutes=120)
-    return schemas.TokenShort(token_short=token_short)
+def create_long_token(payload: dict) -> schemas.LongToken:
+    long_token = create_token(TokenType.LONG, payload, minutes=52560)
+    return schemas.LongToken(long_token=long_token)
 
 
-def create_token_pair(payload: dict) -> schemas.TokenPair:
-    token_long = create_token_long(payload)
-    token_short = create_token_short(payload)
-    return schemas.TokenPair(
-        token_long=token_long.token_long, token_short=token_short.token_short
+def decode_long_token(token: str) -> dict:
+    token_dict = decode_token(TokenType.LONG, token)
+    payload = token_dict.get("payload")
+    return payload
+
+
+def create_short_token(payload: dict) -> schemas.ShortToken:
+    short_token = create_token(TokenType.SHORT, payload, minutes=120)
+    return schemas.ShortToken(short_token=short_token)
+
+
+def decode_short_token(token: str) -> dict:
+    token_dict = decode_token(TokenType.SHORT, token)
+    payload = token_dict.get("payload")
+    return payload
+
+
+def create_token_pair(payload: dict) -> schemas.PairTokens:
+    long_token = create_long_token(payload)
+    short_token = create_short_token(payload)
+    return schemas.PairTokens(
+        long_token=long_token.long_token, short_token=short_token.short_token
     )
