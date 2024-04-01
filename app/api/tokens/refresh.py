@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status, Request, Header
+from fastapi import APIRouter, Depends, HTTPException, status, Request
 
 from app import schemas
 from app.api import depends
@@ -12,9 +12,9 @@ router = APIRouter()
 async def refresh_short_token(
     request: Request,
     long_token: str,
-    user_agent: str = Header(),
     db: Database = Depends(depends.get_db),
 ):
+    user_agent = request.headers.get("User-Agent")
     long_token_data = security.decode_token(long_token)
     payload = long_token_data.get("payload")
 

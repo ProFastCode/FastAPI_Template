@@ -9,8 +9,8 @@ from .base import Base
 
 
 class User(Base):
-    username: Mapped[str] = mapped_column(sa.String, unique=True, nullable=False)
+    email: Mapped[str] = mapped_column(sa.String, unique=True, nullable=False)
     password: Mapped[str] = mapped_column(sa.String, unique=False, nullable=False)
 
     def __repr__(self):
-        return f"{__class__.__name__}({self.id=}, {self.username=})"
+        return f"{__class__.__name__}({self.id=}, {self.email=})"

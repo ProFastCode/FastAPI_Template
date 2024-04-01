@@ -4,18 +4,18 @@ help:
 	@echo "  make <commands>"
 	@echo ""
 	@echo "AVAILABLE COMMANDS"
-	@echo "  run		Start the app"
-	@echo "  lint		Reformat code"
+	@echo "  dev		Start the app"
+	@echo "  ref		Reformat code"
 	@echo "  migrate		Alembic migrate database"
 	@echo "  generate		Alembic generate database"
 
-.PHONY: lint
-lint:
+.PHONY: ref
+ref:
 	poetry run ruff ./app --fix && poetry run black ./app
 
-.PHONY: run
-run:
-	poetry run python -m app
+.PHONY: dev
+dev:
+	uvicorn app:app --reload --access-log --log-level debug
 
 .PHONY: generate
 generate:
