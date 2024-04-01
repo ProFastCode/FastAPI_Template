@@ -12,6 +12,12 @@ router = APIRouter()
 async def new_auth_token(
     request: Request, data: schemas.UserNew, db: Database = Depends(depends.get_db)
 ):
+    """
+    Получить токен аутентификации:
+
+    - **email**: Email-пользователя
+    - **password**: Password-Пользователя
+    """
     user_agent = request.headers.get("User-Agent")
     if not (user := await db.user.get_by_email(data.email, data.password)):
         raise HTTPException(

@@ -11,11 +11,16 @@ router = APIRouter()
 @router.post("/refresh/", response_model=schemas.ShortToken)
 async def refresh_short_token(
     request: Request,
-    long_token: str,
+    data: schemas.LongToken,
     db: Database = Depends(depends.get_db),
 ):
+    """
+    Обновить короткий токен:
+
+    - **long_token**: Длинный токен
+    """
     user_agent = request.headers.get("User-Agent")
-    payload = security.decode_long_token(long_token)
+    payload = security.decode_long_token(data.long_token)
     if not (user := await db.user.get(payload.get("id"))):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found"
