@@ -11,7 +11,6 @@ __all__ = (
     "GetUser",
     "NewUser",
     "AuthUser",
-
     "AuthToken",
     "LongToken",
     "ShortToken",

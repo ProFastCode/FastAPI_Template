@@ -27,9 +27,7 @@ class UserRepo(Repository[models.User]):
         await self.session.flush()
         return new_entry
 
-    async def get_by_email(
-        self, email: str
-    ) -> models.User | None:
+    async def get_by_email(self, email: str) -> models.User | None:
         where_clauses = [self.type_model.email == email]
         entry = await self.get(where_clauses=where_clauses)
         return entry

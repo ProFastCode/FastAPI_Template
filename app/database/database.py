@@ -23,8 +23,8 @@ async def new_session(engine: AsyncEngine = get_async_engine()) -> AsyncSession:
 
 class Database:
     def __init__(
-            self,
-            session: AsyncSession,
+        self,
+        session: AsyncSession,
     ):
         self.session = session
 

@@ -26,8 +26,9 @@ async def new_auth_token(
         )
 
     if not security.verify_password(data.password, user.password):
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                            detail="Incorrect password")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect password"
+        )
 
     auth_token = security.create_auth_token({"id": user.id})
     await db.user_activity.new(
