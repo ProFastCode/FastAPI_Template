@@ -3,13 +3,15 @@ Pydantic schemas
 """
 
 from .tokens import AuthToken, LongToken, ShortToken, PairTokens
-from .users import UserEmail, UserPassword, UserGet, UserNew
+from .users import EmailUser, PasswordUser, GetUser, NewUser, AuthUser
 
 __all__ = (
-    "UserEmail",
-    "UserPassword",
-    "UserGet",
-    "UserNew",
+    "EmailUser",
+    "PasswordUser",
+    "GetUser",
+    "NewUser",
+    "AuthUser",
+
     "AuthToken",
     "LongToken",
     "ShortToken",

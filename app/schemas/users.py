@@ -5,22 +5,26 @@ Schemas Users
 from pydantic import BaseModel, Field, EmailStr
 
 
-class User(BaseModel):
+class BaseUser(BaseModel):
     class Config:
         from_attributes = True
 
 
-class UserEmail(User):
+class EmailUser(BaseUser):
     email: EmailStr = Field(examples=["fast.code.auth@gmail.com"])
 
 
-class UserPassword(User):
+class PasswordUser(BaseUser):
     password: str = Field(examples=["12345"])
 
 
-class UserGet(UserEmail):
+class GetUser(EmailUser):
     id: int = Field(examples=[0])
 
 
-class UserNew(UserPassword, UserEmail):
+class NewUser(PasswordUser, EmailUser):
+    pass
+
+
+class AuthUser(PasswordUser, EmailUser):
     pass
