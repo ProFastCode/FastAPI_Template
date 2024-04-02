@@ -22,5 +22,5 @@ class UserGet(UserEmail):
     id: int = Field(examples=[0])
 
 
-class UserNew(UserEmail, UserPassword):
+class UserNew(UserPassword, UserEmail):
     pass

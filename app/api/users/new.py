@@ -8,6 +8,7 @@ from starlette import status
 from app import schemas
 from app.api import depends
 from app.database import Database
+from app.core import security
 
 router = APIRouter()
 
@@ -28,6 +29,7 @@ async def new(user: schemas.UserNew, db: Database = Depends(depends.get_db)):
             detail="User is already taken.",
         )
 
-    user = await db.user.new(user.email, user.password)
+    hash_password = security.hash_password(user.password)
+    user = await db.user.new(user.email, hash_password)
     await db.session.commit()
     return user

@@ -19,11 +19,16 @@ async def new_auth_token(
     - **password**: Password-Пользователя
     """
     user_agent = request.headers.get("User-Agent")
-    if not (user := await db.user.get_by_email(data.email, data.password)):
+    if not (user := await db.user.get_by_email(data.email)):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="A user not yet been registered",
         )
+
+    if not security.verify_password(data.password, user.password):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                            detail="Incorrect password")
+
     auth_token = security.create_auth_token({"id": user.id})
     await db.user_activity.new(
         user_id=user.id,

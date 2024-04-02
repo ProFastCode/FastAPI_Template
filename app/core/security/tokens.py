@@ -3,12 +3,9 @@ from enum import Enum
 
 from fastapi import HTTPException, status
 from jose import jwt, JWTError
-from passlib.context import CryptContext
 
 from app import schemas
 from app.core import settings
-
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 ALGORITHM = "HS256"
 
@@ -21,7 +18,9 @@ class TokenType(Enum):
 
 def create_token(token_type: TokenType, payload: dict, minutes: int) -> str:
     data = dict(
-        token_type=token_type.value[0], payload=payload, exp=datetime.now() + timedelta(minutes=minutes)
+        token_type=token_type.value[0],
+        payload=payload,
+        exp=datetime.now() + timedelta(minutes=minutes),
     )
     encoded_jwt = jwt.encode(data, settings.APP_AUTH_KEY, algorithm=ALGORITHM)
     return encoded_jwt

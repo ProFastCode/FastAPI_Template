@@ -28,10 +28,8 @@ class UserRepo(Repository[models.User]):
         return new_entry
 
     async def get_by_email(
-        self, email: str, password: str | None = None
+        self, email: str
     ) -> models.User | None:
         where_clauses = [self.type_model.email == email]
-        if password:
-            where_clauses.append(self.type_model.password == password)
         entry = await self.get(where_clauses=where_clauses)
         return entry

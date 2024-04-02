@@ -17,8 +17,8 @@ async def get_db() -> Database:
 
 
 async def get_current_user(
-        short_token: str = Header(),
-        db: Database = Depends(get_db),
+    short_token: str = Header(),
+    db: Database = Depends(get_db),
 ) -> models.User:
     payload = security.decode_short_token(short_token)
     if not (user := await db.user.get(payload.get("id"))):
