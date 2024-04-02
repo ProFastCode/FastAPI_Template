@@ -2,12 +2,11 @@
 Schemas Users
 """
 
-from pydantic import BaseModel, Field, EmailStr
+from pydantic import ConfigDict, BaseModel, Field, EmailStr
 
 
 class BaseUser(BaseModel):
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class EmailUser(BaseUser):

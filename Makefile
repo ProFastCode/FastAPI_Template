@@ -17,6 +17,7 @@ ref:
 dev:
 	uvicorn app:app --reload --access-log --log-level debug
 
+
 .PHONY: generate
 generate:
 	poetry run alembic revision --autogenerate

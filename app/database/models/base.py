@@ -5,8 +5,7 @@ Base Model
 from datetime import datetime as dt
 
 import sqlalchemy as sa
-from sqlalchemy.ext.declarative import as_declarative
-from sqlalchemy.orm import Mapped, declared_attr, mapped_column
+from sqlalchemy.orm import Mapped, declared_attr, mapped_column, as_declarative
 
 metadata = sa.MetaData(
     naming_convention={

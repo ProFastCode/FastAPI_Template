@@ -12,15 +12,15 @@ class Settings(BaseSettings):
     )
 
     # APP
-    APP_AUTH_KEY: str = "app_auth_key"
-    APP_API_PREFIX: str = "/api"
+    APP_AUTH_KEY: str
+    APP_API_PREFIX: str
 
     # DATABASE
-    POSTGRES_HOST: str = "localhost"
-    POSTGRES_PORT: int = 5432
-    POSTGRES_USER: str = "postgres"
-    POSTGRES_PASSWORD: str = "postgres"
-    POSTGRES_DATABASE: str = "postgres"
+    POSTGRES_HOST: str
+    POSTGRES_PORT: int
+    POSTGRES_USER: str
+    POSTGRES_PASSWORD: str
+    POSTGRES_DATABASE: str
 
     @property
     def pg_url(self) -> URL:
