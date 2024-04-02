@@ -9,6 +9,10 @@ class BaseUser(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
+class StaffUser(BaseUser):
+    staff: bool = Field(examples=[False])
+
+
 class EmailUser(BaseUser):
     email: EmailStr = Field(examples=["fast.code.auth@gmail.com"])
 
@@ -17,7 +21,7 @@ class PasswordUser(BaseUser):
     password: str = Field(examples=["12345"])
 
 
-class GetUser(EmailUser):
+class GetUser(EmailUser, StaffUser):
     id: int = Field(examples=[0])
 
 

@@ -4,6 +4,7 @@ Pydantic schemas
 
 from .tokens import AuthToken, LongToken, ShortToken, PairTokens
 from .users import EmailUser, PasswordUser, GetUser, NewUser, AuthUser
+from .stats import StatsUsers
 
 __all__ = (
     "EmailUser",
@@ -15,4 +16,5 @@ __all__ = (
     "LongToken",
     "ShortToken",
     "PairTokens",
+    "StatsUsers",
 )
