@@ -8,9 +8,11 @@ from app.database import Database
 router = APIRouter()
 
 
-@router.post("/pair/", response_model=schemas.PairTokens)
+@router.post("/pair/", response_model=schemas.tokens.PairTokens)
 async def new_pair_tokens(
-    request: Request, data: schemas.AuthToken, db: Database = Depends(depends.get_db)
+    request: Request,
+    data: schemas.tokens.AuthToken,
+    db: Database = Depends(depends.get_db),
 ):
     """
     Получить парные токены:

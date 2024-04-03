@@ -13,8 +13,8 @@ from app.core import security
 router = APIRouter()
 
 
-@router.post("/", response_model=schemas.GetUser)
-async def new(user: schemas.NewUser, db: Database = Depends(depends.get_db)):
+@router.post("/", response_model=schemas.users.GetUser)
+async def new(user: schemas.users.NewUser, db: Database = Depends(depends.get_db)):
     """
     Создать нового пользователя:
 

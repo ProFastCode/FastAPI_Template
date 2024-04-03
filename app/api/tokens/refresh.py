@@ -8,10 +8,10 @@ from app.database import Database
 router = APIRouter()
 
 
-@router.post("/refresh/", response_model=schemas.ShortToken)
+@router.post("/refresh/", response_model=schemas.tokens.ShortToken)
 async def refresh_short_token(
     request: Request,
-    data: schemas.LongToken,
+    data: schemas.tokens.LongToken,
     db: Database = Depends(depends.get_db),
 ):
     """

@@ -47,9 +47,9 @@ def decode_token(token_type: TokenType, token: str) -> dict:
         )
 
 
-def create_auth_token(payload: dict) -> schemas.AuthToken:
+def create_auth_token(payload: dict) -> schemas.tokens.AuthToken:
     auth_token = create_token(TokenType.AUTH, payload, 15)
-    return schemas.AuthToken(auth_token=auth_token)
+    return schemas.tokens.AuthToken(auth_token=auth_token)
 
 
 def decode_auth_token(token: str) -> dict:
@@ -58,9 +58,9 @@ def decode_auth_token(token: str) -> dict:
     return payload
 
 
-def create_long_token(payload: dict) -> schemas.LongToken:
+def create_long_token(payload: dict) -> schemas.tokens.LongToken:
     long_token = create_token(TokenType.LONG, payload, minutes=52560)
-    return schemas.LongToken(long_token=long_token)
+    return schemas.tokens.LongToken(long_token=long_token)
 
 
 def decode_long_token(token: str) -> dict:
@@ -69,9 +69,9 @@ def decode_long_token(token: str) -> dict:
     return payload
 
 
-def create_short_token(payload: dict) -> schemas.ShortToken:
+def create_short_token(payload: dict) -> schemas.tokens.ShortToken:
     short_token = create_token(TokenType.SHORT, payload, minutes=120)
-    return schemas.ShortToken(short_token=short_token)
+    return schemas.tokens.ShortToken(short_token=short_token)
 
 
 def decode_short_token(token: str) -> dict:
@@ -80,9 +80,9 @@ def decode_short_token(token: str) -> dict:
     return payload
 
 
-def create_token_pair(payload: dict) -> schemas.PairTokens:
+def create_token_pair(payload: dict) -> schemas.tokens.PairTokens:
     long_token = create_long_token(payload)
     short_token = create_short_token(payload)
-    return schemas.PairTokens(
+    return schemas.tokens.PairTokens(
         long_token=long_token.long_token, short_token=short_token.short_token
     )

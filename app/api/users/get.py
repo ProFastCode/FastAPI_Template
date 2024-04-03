@@ -11,7 +11,7 @@ from app.database import models
 router = APIRouter()
 
 
-@router.get("/", response_model=schemas.GetUser)
+@router.get("/", response_model=schemas.users.GetUser)
 async def get(user: models.User = Depends(depends.get_current_user)):
     """
     Получить информацию о пользователе:

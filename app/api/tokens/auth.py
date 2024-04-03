@@ -8,9 +8,11 @@ from app.database import Database
 router = APIRouter()
 
 
-@router.post("/auth/", response_model=schemas.AuthToken)
+@router.post("/auth/", response_model=schemas.tokens.AuthToken)
 async def new_auth_token(
-    request: Request, data: schemas.AuthUser, db: Database = Depends(depends.get_db)
+    request: Request,
+    data: schemas.users.AuthUser,
+    db: Database = Depends(depends.get_db),
 ):
     """
     Получить токен аутентификации:

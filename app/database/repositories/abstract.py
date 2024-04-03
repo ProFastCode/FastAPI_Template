@@ -48,6 +48,15 @@ class Repository(Generic[AbstractModel]):
         statement = sa.delete(self.type_model).where(sa.and_(*where_clauses))
         await self.session.execute(statement)
 
+    async def count(self, where_clauses: list[sa.ClauseElement] = None) -> int:
+        statement = (
+            sa.select(sa.func.count())
+            .select_from(self.type_model)
+        )
+        if where_clauses:
+            statement = statement.where(sa.and_(*where_clauses))
+        return (await self.session.execute(statement)).scalar()
+
     async def update(
         self, ident: int = None, where_clauses: list[sa.ClauseElement] = None, **values
     ) -> sa.Result:
