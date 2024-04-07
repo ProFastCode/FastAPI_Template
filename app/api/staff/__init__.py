@@ -10,6 +10,8 @@ from .. import depends
 from ..tags import Tags
 
 router = APIRouter(
-    prefix="/staff", tags=[Tags.staff], dependencies=[Depends(depends.only_staff)]
+    prefix="/staff",
+    tags=[Tags.staff],
+    dependencies=[Depends(depends.only_staff_access)],
 )
 router.include_router(stats.router)

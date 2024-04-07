@@ -20,9 +20,9 @@ class UserRepo(Repository[models.User]):
         super().__init__(type_model=models.User, session=session)
 
     async def new(
-            self,
-            email: str,
-            password: str,
+        self,
+        email: str,
+        password: str,
     ) -> models.User:
         model = models.User()
         model.email = email
@@ -37,18 +37,31 @@ class UserRepo(Repository[models.User]):
         entry = await self.get(where_clauses=where_clauses)
         return entry
 
-    async def get_count_users(self, period: Literal["today", "week", "month"] = None) -> int | None:
+    async def get_count_users(
+        self, period: Literal["today", "week", "month"] = None
+    ) -> int | None:
         where_clauses = None
         match period:
             case "today":
                 today = dt.combine(date.today(), dt.min.time())
-                where_clauses = [self.type_model.create_at >= today, self.type_model.create_at < today + td(days=1)]
+                where_clauses = [
+                    self.type_model.create_at >= today,
+                    self.type_model.create_at < today + td(days=1),
+                ]
             case "week":
                 start_of_week = dt.now() - td(days=dt.now().weekday() + 1)
-                where_clauses = [self.type_model.create_at >= start_of_week, self.type_model.create_at < dt.now()]
+                where_clauses = [
+                    self.type_model.create_at >= start_of_week,
+                    self.type_model.create_at < dt.now(),
+                ]
             case "month":
                 start_of_month = dt.now().replace(day=1)
-                end_of_month = start_of_month.replace(month=start_of_month.month + 1) - td(days=1)
-                where_clauses = [self.type_model.create_at >= start_of_month, self.type_model.create_at <= end_of_month]
+                end_of_month = start_of_month.replace(
+                    month=start_of_month.month + 1
+                ) - td(days=1)
+                where_clauses = [
+                    self.type_model.create_at >= start_of_month,
+                    self.type_model.create_at <= end_of_month,
+                ]
         entry = await self.count(where_clauses)
         return entry

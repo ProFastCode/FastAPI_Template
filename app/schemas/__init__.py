@@ -2,10 +2,6 @@
 Pydantic schemas
 """
 
-from . import staff, users, tokens
+from . import users, tokens, staff
 
-__all__ = (
-    "users",
-    "tokens",
-    "staff",
-)
+__all__ = ["users", "tokens", "staff"]

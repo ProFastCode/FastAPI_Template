@@ -29,7 +29,7 @@ async def new(user: schemas.users.NewUser, db: Database = Depends(depends.get_db
             detail="User is already taken.",
         )
 
-    hash_password = security.hash_password(user.password)
+    hash_password = security.password_manager.hash_password(user.password)
     user = await db.user.new(user.email, hash_password)
     await db.session.commit()
     return user

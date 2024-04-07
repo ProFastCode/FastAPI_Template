@@ -20,12 +20,13 @@ async def new_pair_tokens(
     - **auth_token**: Токен аутентификации
     """
     user_agent = request.headers.get("User-Agent")
-    payload = security.decode_auth_token(data.auth_token)
+    payload = security.token_manager.decode_auth_token(data.auth_token)
     if not (user := await db.user.get(payload.get("id"))):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found"
         )
-    pair_tokens = security.create_token_pair(payload)
+    long_token = security.token_manager.create_long_token(payload)
+    short_token = security.token_manager.create_short_token(payload)
     await db.user_activity.new(
         user_id=user.id,
         action="new_pair_tokens",
@@ -34,4 +35,4 @@ async def new_pair_tokens(
         ip=request.client.host,
     )
     await db.session.commit()
-    return pair_tokens
+    return schemas.tokens.PairTokens(long_token=long_token, short_token=short_token)

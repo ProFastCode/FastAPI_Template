@@ -49,10 +49,7 @@ class Repository(Generic[AbstractModel]):
         await self.session.execute(statement)
 
     async def count(self, where_clauses: list[sa.ClauseElement] = None) -> int:
-        statement = (
-            sa.select(sa.func.count())
-            .select_from(self.type_model)
-        )
+        statement = sa.select(sa.func.count()).select_from(self.type_model)
         if where_clauses:
             statement = statement.where(sa.and_(*where_clauses))
         return (await self.session.execute(statement)).scalar()

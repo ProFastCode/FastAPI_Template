@@ -27,12 +27,12 @@ async def new_auth_token(
             detail="A user not yet been registered",
         )
 
-    if not security.verify_password(data.password, user.password):
+    if not security.password_manager.verify_password(data.password, user.password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect password"
         )
 
-    auth_token = security.create_auth_token({"id": user.id})
+    auth_token = security.token_manager.create_auth_token({"id": user.id})
     await db.user_activity.new(
         user_id=user.id,
         action="new_auth_token",
@@ -41,4 +41,4 @@ async def new_auth_token(
         ip=request.client.host,
     )
     await db.session.commit()
-    return auth_token
+    return schemas.tokens.AuthToken(auth_token=auth_token)
