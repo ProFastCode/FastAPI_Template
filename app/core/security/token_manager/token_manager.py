@@ -4,7 +4,7 @@ from jose import jwt, JWTError
 
 from app.core import settings
 from .abstract import AbstractTokenManager
-from .enums import TokenType
+from .structures import TokenType
 from .exceptions import TokenExpired, InvalidTokenType, InvalidToken
 
 ALGORITHM = "HS256"

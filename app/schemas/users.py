@@ -4,13 +4,15 @@ Schemas Users
 
 from pydantic import ConfigDict, BaseModel, Field, EmailStr
 
+from app.database.structures import Role
+
 
 class BaseUser(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
-class StaffUser(BaseUser):
-    staff: bool = Field(examples=[False])
+class RoleUser(BaseUser):
+    role: Role = Field(examples=[Role.USER])
 
 
 class EmailUser(BaseUser):
@@ -21,7 +23,7 @@ class PasswordUser(BaseUser):
     password: str = Field(examples=["12345"])
 
 
-class GetUser(EmailUser, StaffUser):
+class GetUser(EmailUser, RoleUser):
     id: int = Field(examples=[0])
 
 

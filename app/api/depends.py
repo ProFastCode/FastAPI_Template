@@ -6,6 +6,7 @@ from fastapi import Depends, HTTPException, status, Header
 
 from app.core import security
 from app.database import Database, new_session, models
+from app.database.structures import Role
 
 
 async def get_db() -> Database:
@@ -29,10 +30,10 @@ async def get_current_user(
     return user
 
 
-async def only_staff_access(
+async def admins_access(
     user: models.User = Depends(get_current_user),
 ) -> None:
-    if not user.staff:
+    if not user.role >= Role.ADMIN.value:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="You do not have access to this section",

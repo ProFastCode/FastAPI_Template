@@ -4,9 +4,9 @@ App API Module
 
 from fastapi import APIRouter
 
-from . import users, tokens, staff
+from .endpoints import users, tokens, admins
 
 api_router = APIRouter()
-api_router.include_router(staff.router)
 api_router.include_router(users.router)
 api_router.include_router(tokens.router)
+api_router.include_router(admins.router)
