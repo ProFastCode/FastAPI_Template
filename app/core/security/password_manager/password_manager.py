@@ -1,7 +1,9 @@
 import bcrypt
 
+from .abstract import AbstractPasswordManager
 
-class PasswordManager:
+
+class PasswordManager(AbstractPasswordManager):
     @classmethod
     def hash_password(cls, password: str) -> str:
         salt = bcrypt.gensalt()

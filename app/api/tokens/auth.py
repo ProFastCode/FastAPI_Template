@@ -1,18 +1,14 @@
-from fastapi import APIRouter, Depends, Request, HTTPException, status
+from fastapi import APIRouter, Depends
 
-from app import schemas
-from app.api import depends
-from app.core import security
-from app.database import Database
+from app import schemas, use_cases
 
 router = APIRouter()
 
 
 @router.post("/auth/", response_model=schemas.tokens.AuthToken)
 async def new_auth_token(
-    request: Request,
     data: schemas.users.AuthUser,
-    db: Database = Depends(depends.get_db),
+    use_case: use_cases.tokens.AuthUseCase = Depends(use_cases.tokens.AuthUseCase),
 ):
     """
     Получить токен аутентификации:
@@ -20,25 +16,5 @@ async def new_auth_token(
     - **email**: Email-пользователя
     - **password**: Password-Пользователя
     """
-    user_agent = request.headers.get("User-Agent")
-    if not (user := await db.user.get_by_email(data.email)):
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="A user not yet been registered",
-        )
-
-    if not security.password_manager.verify_password(data.password, user.password):
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect password"
-        )
-
-    auth_token = security.token_manager.create_auth_token({"id": user.id})
-    await db.user_activity.new(
-        user_id=user.id,
-        action="new_auth_token",
-        comment="Новый токен аутентификации",
-        user_agent=user_agent,
-        ip=request.client.host,
-    )
-    await db.session.commit()
-    return schemas.tokens.AuthToken(auth_token=auth_token)
+    auth_token = await use_case.execute(data)
+    return auth_token
