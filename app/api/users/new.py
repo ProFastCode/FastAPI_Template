@@ -2,19 +2,18 @@
 User Endpoints Module
 """
 
-from fastapi import APIRouter, Depends, HTTPException
-from starlette import status
+from fastapi import APIRouter, Depends
 
-from app import schemas
-from app.api import depends
-from app.database import Database
-from app.core import security
+from app import schemas, use_cases
 
 router = APIRouter()
 
 
 @router.post("/", response_model=schemas.users.GetUser)
-async def new(user: schemas.users.NewUser, db: Database = Depends(depends.get_db)):
+async def new(
+    data: schemas.users.NewUser,
+    use_case: use_cases.users.NewUseCase = Depends(use_cases.users.NewUseCase),
+):
     """
     Создать нового пользователя:
 
@@ -23,13 +22,5 @@ async def new(user: schemas.users.NewUser, db: Database = Depends(depends.get_db
     - **password**: Password-Пользователя
     """
 
-    if await db.user.get_by_email(user.email):
-        raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail="User is already taken.",
-        )
-
-    hash_password = security.password_manager.hash_password(user.password)
-    user = await db.user.new(user.email, hash_password)
-    await db.session.commit()
+    user = await use_case.execute(data)
     return user
