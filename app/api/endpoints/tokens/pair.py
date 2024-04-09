@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, Request
 
-from app.api import depends, exps
+from app.api import depends
+from app.core import exps
 from app.core.security import tkn_manager
 from app.database import Database
 from app.schemas.tokens import PairTokens, AuthToken

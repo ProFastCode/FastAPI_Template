@@ -2,10 +2,9 @@ from datetime import datetime, timedelta
 
 from jose import jwt, JWTError
 
-from app.core import settings
+from app.core import settings, exps
 from .abstract import AbstractTokenManager
-from .structures import TokenType
-from .exceptions import TokenExpired, InvalidTokenType, InvalidToken
+from ...structures import TokenType
 
 ALGORITHM = "HS256"
 
@@ -15,7 +14,7 @@ class JWTTokenManager(AbstractTokenManager):
         try:
             payload = jwt.decode(token, settings.APP_SECRET_KEY, algorithms=[ALGORITHM])
         except JWTError:
-            raise InvalidToken
+            raise exps.TOKEN_INVALID
         return payload
 
     def _create_token(self, payload: dict) -> str:
@@ -35,9 +34,9 @@ class JWTTokenManager(AbstractTokenManager):
     def validate_payload(cls, token_type: TokenType, payload: dict) -> None:
         exp: float = payload.get("exp")
         if not (datetime.fromtimestamp(exp) > datetime.now()):
-            raise TokenExpired
+            raise exps.TOKEN_EXPIRED
         if payload.get("token_type") != token_type.value:
-            raise InvalidTokenType
+            raise exps.TOKEN_INVALID_TYPE
 
 
 class TokenManager(JWTTokenManager):

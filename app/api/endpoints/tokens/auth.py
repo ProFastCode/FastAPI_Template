@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Depends, Request
 
-from app.api import depends, exps
-from app.core.security import tkn_manager, pswd_manager
+from app.api import depends
+from app.core import exps
+from app.core.security import tkn_manager, pwd_manager
 from app.database import Database
 from app.schemas.tokens import AuthToken
 from app.schemas.users import AuthUser
@@ -22,7 +23,7 @@ async def new_auth_token(
     if not (user := await db.user.get_by_email(data.email)):
         raise exps.USER_NOT_REGISTERED
 
-    if not pswd_manager.verify_password(data.password, user.password):
+    if not pwd_manager.verify_password(data.password, user.password):
         raise exps.USER_INCORRECT_PASSWORD
 
     auth_token = tkn_manager.create_auth_token({"id": user.id})

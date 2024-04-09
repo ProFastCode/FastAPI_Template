@@ -4,7 +4,7 @@ Schemas Users
 
 from pydantic import ConfigDict, BaseModel, Field, EmailStr
 
-from app.database.structures import Role
+from app.core.structures import Role
 
 
 class BaseUser(BaseModel):
@@ -24,7 +24,7 @@ class PasswordUser(BaseUser):
 
 
 class GetUser(EmailUser, RoleUser):
-    id: int = Field(examples=[0])
+    id: int = Field(examples=[1])
 
 
 class NewUser(PasswordUser, EmailUser):
