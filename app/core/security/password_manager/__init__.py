@@ -1,3 +1,5 @@
 from .password_manager import PasswordManager
 
-__all__ = ["PasswordManager"]
+pswd_manager = PasswordManager()
+
+__all__ = ["PasswordManager", "pswd_manager"]

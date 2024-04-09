@@ -1,5 +1,5 @@
-from .password_manager import PasswordManager
-from .token_manager import TokenManager
+from . import password_manager, token_manager
+from .password_manager import pswd_manager
+from .token_manager import tkn_manager
 
-password_manager = PasswordManager()
-token_manager = TokenManager()
+__all__ = ["password_manager", "token_manager", "pswd_manager", "tkn_manager"]

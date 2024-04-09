@@ -1,13 +1,31 @@
-class InvalidToken(Exception):
-    def __init__(self, msg: str = "Invalid token") -> None:
-        self.msg = msg
+from fastapi import HTTPException, status
 
 
-class TokenExpired(Exception):
-    def __init__(self, msg: str = "Token expired") -> None:
-        self.msg = msg
+class InvalidToken(HTTPException):
+    def __init__(
+        self,
+        status_code: int = status.HTTP_401_UNAUTHORIZED,
+        detail: str = "Invalid token",
+    ) -> None:
+        self.status_code = status_code
+        self.detail = detail
 
 
-class InvalidTokenType(Exception):
-    def __init__(self, msg: str = "Invalid token type") -> None:
-        self.msg = msg
+class TokenExpired(HTTPException):
+    def __init__(
+        self,
+        status_code: int = status.HTTP_401_UNAUTHORIZED,
+        detail: str = "Token expired",
+    ) -> None:
+        self.status_code = status_code
+        self.detail = detail
+
+
+class InvalidTokenType(HTTPException):
+    def __init__(
+        self,
+        status_code: int = status.HTTP_401_UNAUTHORIZED,
+        detail: str = "Invalid token type",
+    ) -> None:
+        self.status_code = status_code
+        self.detail = detail

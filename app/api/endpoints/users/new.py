@@ -4,23 +4,28 @@ User Endpoints Module
 
 from fastapi import APIRouter, Depends
 
-from app import schemas, use_cases
+from app.api import depends, exps
+from app.core.security import pswd_manager
+from app.database import Database
+from app.schemas.users import GetUser, NewUser
 
 router = APIRouter()
 
 
-@router.post("/", response_model=schemas.users.GetUser)
-async def new(
-    data: schemas.users.NewUser,
-    use_case: use_cases.users.NewUseCase = Depends(use_cases.users.NewUseCase),
-):
+@router.post("/", response_model=GetUser)
+async def new(data: NewUser, db: Database = Depends(depends.get_db)):
     """
     Создать нового пользователя:
 
     - **id**: ID-пользователя
+    - **role**: Role-Пользователя
     - **email**: Email-Пользователя
-    - **password**: Password-Пользователя
     """
 
-    user = await use_case.execute(data)
+    if await db.user.get_by_email(data.email):
+        raise exps.USER_EXISTS
+
+    hash_password = pswd_manager.hash_password(data.password)
+    user = await db.user.new(data.email, hash_password)
+    await db.session.commit()
     return user

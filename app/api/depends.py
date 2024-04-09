@@ -21,7 +21,7 @@ async def get_current_user(
     short_token: str = Header(),
     db: Database = Depends(get_db),
 ) -> models.User:
-    payload = security.token_manager.decode_short_token(short_token)
+    payload = security.tkn_manager.decode_short_token(short_token)
     if not (user := await db.user.get(payload.get("id"))):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found"

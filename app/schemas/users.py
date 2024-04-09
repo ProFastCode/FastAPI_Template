@@ -12,7 +12,7 @@ class BaseUser(BaseModel):
 
 
 class RoleUser(BaseUser):
-    role: Role = Field(examples=[Role.USER])
+    role: int = Field(examples=[Role.USER])
 
 
 class EmailUser(BaseUser):
