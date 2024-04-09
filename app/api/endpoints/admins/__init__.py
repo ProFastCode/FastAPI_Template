@@ -7,7 +7,7 @@ from fastapi.params import Depends
 
 from . import stats
 from app.api import depends
-from app.api.tags import Tags
+from app.core.structures import Tags
 
 router = APIRouter(
     prefix="/admins",

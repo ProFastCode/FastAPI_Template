@@ -5,7 +5,7 @@ Token API Module
 from fastapi import APIRouter
 
 from . import auth, pair, refresh
-from app.api.tags import Tags
+from app.core.structures import Tags
 
 router = APIRouter(prefix="/tokens", tags=[Tags.tokens])
 router.include_router(auth.router)
