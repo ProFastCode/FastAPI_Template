@@ -1,31 +1,28 @@
 """
-Schemas Tokens
+Token Model
 """
 
-from pydantic import ConfigDict, BaseModel, Field
+from sqlmodel import Field, SQLModel
 
 
-class BaseToken(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
+class TokenBase(SQLModel):
+    pass
 
 
-class AuthToken(BaseToken):
+class AuthToken(TokenBase):
     auth_token: str = Field(
-        examples=["auth_token"],
         description="Необходим для получения пары-токенов, действует 15мин.",
     )
 
 
-class LongToken(BaseToken):
+class LongToken(TokenBase):
     long_token: str = Field(
-        examples=["long_token"],
         description="Необходим для получения нового короткого токена, действует 1год.",
     )
 
 
-class ShortToken(BaseToken):
+class ShortToken(TokenBase):
     short_token: str = Field(
-        examples=["short_token"],
         description="Необходим для запросов к API, действует 2часа.",
     )
 

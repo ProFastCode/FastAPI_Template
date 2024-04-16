@@ -1,3 +1,7 @@
+"""
+Exceptions
+"""
+
 from fastapi import HTTPException, status
 
 # Users

@@ -1,9 +1,8 @@
+"""
+Structures
+"""
+
 from enum import IntEnum, Enum
-
-
-class Role(IntEnum):
-    USER = 0
-    ADMIN = 1
 
 
 class TokenType(IntEnum):
@@ -15,4 +14,4 @@ class TokenType(IntEnum):
 class Tags(Enum):
     users = "users"
     tokens = "tokens"
-    admins = "admins"
+    staff = "staff"

@@ -1,9 +1,9 @@
 """
-App Settings Module
+Settings
 """
 
+from pydantic import PostgresDsn
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from sqlalchemy import URL
 
 
 class Settings(BaseSettings):
@@ -23,16 +23,16 @@ class Settings(BaseSettings):
     POSTGRES_DATABASE: str
 
     @property
-    def pg_url(self) -> URL:
-        url = URL.create(
-            "postgresql+asyncpg",
-            self.POSTGRES_USER,
-            self.POSTGRES_PASSWORD,
-            self.POSTGRES_HOST,
-            self.POSTGRES_PORT,
-            self.POSTGRES_DATABASE,
+    def pg_dns(self) -> PostgresDsn:
+        dns = PostgresDsn.build(
+            scheme="postgresql+asyncpg",
+            username=self.POSTGRES_USER,
+            password=self.POSTGRES_PASSWORD,
+            host=self.POSTGRES_HOST,
+            port=self.POSTGRES_PORT,
+            path=self.POSTGRES_DATABASE,
         )
-        return url
+        return dns
 
 
 settings = Settings()

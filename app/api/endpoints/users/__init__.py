@@ -4,9 +4,9 @@ User API Module
 
 from fastapi import APIRouter
 
-from . import get, new
 from app.core.structures import Tags
+from . import create, read
 
 router = APIRouter(prefix="/users", tags=[Tags.users])
-router.include_router(new.router)
-router.include_router(get.router)
+router.include_router(create.router)
+router.include_router(read.router)

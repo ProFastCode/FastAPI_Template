@@ -4,17 +4,17 @@ User Endpoints Module
 
 from fastapi import APIRouter, Depends
 
-from app.api import depends
+from app import models
+from app.api import deps
 from app.core import exps
+from app.core.db import Database
 from app.core.security import pwd_manager
-from app.database import Database
-from app.schemas.users import GetUser, NewUser
 
 router = APIRouter()
 
 
-@router.post("/", response_model=GetUser)
-async def new(data: NewUser, db: Database = Depends(depends.get_db)):
+@router.post("/", response_model=models.UserRead)
+async def create(data: models.UserCreate, db: Database = Depends(deps.get_db)):
     """
     Создать нового пользователя:
 
