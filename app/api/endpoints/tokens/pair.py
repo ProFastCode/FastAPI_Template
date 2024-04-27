@@ -9,9 +9,7 @@ router = APIRouter()
 @router.post("/pair/", response_model=models.PairTokens)
 async def new_pair_tokens(data: models.AuthToken):
     """
-    Получить парные токены:
-
-    - **auth_token**: Токен аутентификации
+    Получить парные токены
     """
     payload = tkn_manager.decode_auth_token(data.auth_token)
     long_token = tkn_manager.create_long_token(payload)

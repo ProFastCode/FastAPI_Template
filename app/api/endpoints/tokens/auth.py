@@ -12,10 +12,7 @@ router = APIRouter()
 @router.post("/auth/", response_model=models.AuthToken)
 async def new_auth_token(data: models.UserCreate, db: Database = Depends(deps.get_db)):
     """
-    Получить токен аутентификации:
-
-    - **email**: Email-пользователя
-    - **password**: Password-Пользователя
+    Получить токен аутентификации
     """
     if not (user := await db.user.get_by_email(data.email)):
         raise exps.USER_NOT_REGISTERED
@@ -23,5 +20,5 @@ async def new_auth_token(data: models.UserCreate, db: Database = Depends(deps.ge
     if not pwd_manager.verify_password(data.password, user.password):
         raise exps.USER_INCORRECT_PASSWORD
 
-    auth_token = tkn_manager.create_auth_token({"id": user.id})
+    auth_token = tkn_manager.create_auth_token({"id": str(user.id)})
     return models.AuthToken(auth_token=auth_token)

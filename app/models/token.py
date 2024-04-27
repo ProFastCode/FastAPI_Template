@@ -2,26 +2,24 @@
 Token Model
 """
 
-from sqlmodel import Field, SQLModel
+from sqlmodel import Field
+
+from .base import BaseModel
 
 
-class TokenBase(SQLModel):
-    pass
-
-
-class AuthToken(TokenBase):
+class AuthToken(BaseModel):
     auth_token: str = Field(
         description="Необходим для получения пары-токенов, действует 15мин.",
     )
 
 
-class LongToken(TokenBase):
+class LongToken(BaseModel):
     long_token: str = Field(
         description="Необходим для получения нового короткого токена, действует 1год.",
     )
 
 
-class ShortToken(TokenBase):
+class ShortToken(BaseModel):
     short_token: str = Field(
         description="Необходим для запросов к API, действует 2часа.",
     )

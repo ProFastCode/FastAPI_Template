@@ -13,10 +13,6 @@ router = APIRouter()
 @router.get("/", response_model=models.UserRead)
 async def read(user: models.User = Depends(deps.get_current_user)):
     """
-    Получить информацию о пользователе:
-
-    - **id**: ID-пользователя
-    - **staff**: Персонал ли
-    - **email**: Email-Пользователя
+    Получить информацию о пользователе
     """
     return user

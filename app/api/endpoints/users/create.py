@@ -16,17 +16,13 @@ router = APIRouter()
 @router.post("/", response_model=models.UserRead)
 async def create(data: models.UserCreate, db: Database = Depends(deps.get_db)):
     """
-    Создать нового пользователя:
-
-    - **id**: ID-пользователя
-    - **role**: Role-Пользователя
-    - **email**: Email-Пользователя
+    Создать нового пользователя
     """
 
     if await db.user.get_by_email(data.email):
         raise exps.USER_EXISTS
 
-    hash_password = pwd_manager.hash_password(data.password)
-    user = await db.user.new(data.email, hash_password)
-    await db.session.commit()
+    data.password = pwd_manager.hash_password(data.password)
+    model = models.User(**data.model_dump())
+    user = await db.user.create(model)
     return user

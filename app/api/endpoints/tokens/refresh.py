@@ -14,12 +14,10 @@ async def refresh_short_token(
     data: models.LongToken, db: Database = Depends(deps.get_db)
 ):
     """
-    Обновить короткий токен:
-
-    - **long_token**: Длинный токен
+    Обновить короткий токен
     """
     payload = tkn_manager.decode_long_token(data.long_token)
-    if not await db.user.get(payload.get("id")):
+    if not await db.user.read(payload.get("id")):
         raise exps.USER_NOT_FOUND
     short_token = tkn_manager.create_short_token(payload)
     return models.ShortToken(short_token=short_token)

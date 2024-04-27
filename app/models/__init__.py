@@ -2,12 +2,12 @@
 Database Models Module
 """
 
-from .base import Base
+from .base import BaseModel
 from .token import AuthToken, LongToken, ShortToken, PairTokens
 from .user import User, UserRead, UserCreate
 
 __all__ = [
-    "Base",
+    "BaseModel",
     "User",
     "UserRead",
     "UserCreate",

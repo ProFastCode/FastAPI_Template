@@ -12,8 +12,11 @@ class Settings(BaseSettings):
     )
 
     # APP
-    APP_API_PREFIX: str
+    APP_TITLE: str
+    APP_VERSION: str
+    APP_DESCRIPTION: str
     APP_SECRET_KEY: str
+    APP_API_PREFIX: str
 
     # DATABASE
     POSTGRES_HOST: str

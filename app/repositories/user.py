@@ -2,21 +2,18 @@
 User Repository
 """
 
-from sqlalchemy.ext.asyncio import AsyncSession
+import sqlmodel as sm
+from sqlmodel.ext.asyncio.session import AsyncSession
 
 from .abstract import Repository
-from .. import models
+from ..models import User
 
 
-class UserRepo(Repository[models.User]):
+class UserRepo(Repository[User]):
     def __init__(self, session: AsyncSession):
-        super().__init__(type_model=models.User, session=session)
+        super().__init__(type_model=User, session=session)
 
-    async def new(self, email: str, password: str) -> models.User:
-        model = models.User(email=email, password=password)
-        self.session.add(model)
-        await self.session.flush()
-        return model
-
-    async def get_by_email(self, email: str) -> models.User | None:
-        return await self.get_by_where_clauses([self.type_model.email == email])
+    async def get_by_email(self, email: str) -> User | None:
+        stmt = sm.select(self.type_model).where(self.type_model.email == email)
+        result = await self.session.exec(stmt)
+        return result.one_or_none()

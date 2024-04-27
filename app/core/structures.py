@@ -14,4 +14,3 @@ class TokenType(IntEnum):
 class Tags(Enum):
     users = "users"
     tokens = "tokens"
-    staff = "staff"

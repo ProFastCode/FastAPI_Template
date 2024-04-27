@@ -33,7 +33,7 @@ class JWTTokenManager(AbstractTokenManager):
     @classmethod
     def validate_payload(cls, token_type: TokenType, payload: dict) -> None:
         exp: float = payload.get("exp")
-        if not (datetime.fromtimestamp(exp) > datetime.now()):
+        if not (exp > datetime.now().timestamp()):
             raise exps.TOKEN_EXPIRED
         if payload.get("token_type") != token_type.value:
             raise exps.TOKEN_INVALID_TYPE

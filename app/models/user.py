@@ -2,23 +2,23 @@
 User Model
 """
 
-from sqlmodel import Field, SQLModel
+from sqlmodel import Field
 
-from .base import Base
+from .base import BaseModel, UUIDModel, TimestampModel
 
 
-class UserBase(SQLModel):
+class UserBase(BaseModel):
     email: str = Field()
 
 
-class UserRead(Base, UserBase):
-    pass
+class User(UUIDModel, TimestampModel, UserBase, table=True):
+    password: str = Field()
+    is_superuser: bool = Field(False)
 
 
 class UserCreate(UserBase):
     password: str = Field()
 
 
-class User(Base, UserBase, table=True):
-    password: str = Field()
-    staff: bool = Field(False)
+class UserRead(UUIDModel, TimestampModel, UserBase):
+    is_superuser: bool = Field()
