@@ -6,7 +6,7 @@ from jose.constants import ALGORITHMS
 from app.core import exps, settings
 
 
-class JWTTokenManager:
+class JWTManager:
     def __init__(self, secret_key: str = settings.APP_SECRET_KEY):
         self.secret_key: str = secret_key
 

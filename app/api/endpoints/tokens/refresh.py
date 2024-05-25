@@ -5,7 +5,7 @@ from app import models
 from app.api import deps
 from app.core import exps
 from app.core.db import Database
-from app.core.security import JWTTokenManager
+from app.core.security import JWTManager
 
 router = APIRouter()
 
@@ -14,15 +14,14 @@ router = APIRouter()
 async def refresh_access_token(
     data: models.RefreshToken,
     db: Annotated[Database, Depends(deps.get_db)],
-    tkn_manager: Annotated[JWTTokenManager, Depends(deps.get_tkn_manager)],
+    jwt_manager: Annotated[JWTManager, Depends(deps.get_jwt_manager)],
 ):
     """
     Get new access token
     """
-    payload = tkn_manager.decode_token(data.refresh_token)
+    payload = jwt_manager.decode_token(data.refresh_token)
     if payload.get('type') != 'refresh':
         raise exps.TOKEN_INVALID
     if not await db.user.read(payload.get('id')):
         raise exps.USER_NOT_FOUND
-    access_token = tkn_manager.encode_token(payload, 120)
-    return models.AccessToken(access_token=access_token)
+    return models.AccessToken(token=jwt_manager.encode_token(payload, 120))

@@ -1,3 +1,4 @@
-from .token_manager import JWTTokenManager
+from .auth import TelegramAuth
+from .jwt_manager import JWTManager
 
-__all__ = ['JWTTokenManager']
+__all__ = ['JWTManager', 'TelegramAuth']

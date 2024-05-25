@@ -1,7 +1,6 @@
 """
 Settings
 """
-import hashlib
 
 from pydantic import PostgresDsn
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -40,10 +39,7 @@ class Settings(BaseSettings):
 
     # Telegram
     TELEGRAM_BOT_TOKEN: str
-
-    @property
-    def telegram_bot_token_hash(self):
-        return hashlib.sha256(self.TELEGRAM_BOT_TOKEN.encode())
+    TELEGRAM_BOT_USERNAME: str
 
 
 settings = Settings()
