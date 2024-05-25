@@ -2,23 +2,25 @@
 User Model
 """
 
-from sqlmodel import Field
-
-from .base import BaseModel, UUIDModel, TimestampModel
+from sqlmodel import BigInteger, Field, SQLModel
 
 
-class UserBase(BaseModel):
-    email: str = Field()
+class UserBase(SQLModel):
+    id: int = Field(primary_key=True, unique=True, sa_type=BigInteger)
+    username: str | None = Field(default=None)
+    photo_url: str | None = Field(default=None)
+    first_name: str | None = Field(default=None)
+    last_name: str | None = Field(default=None)
 
 
-class User(UUIDModel, TimestampModel, UserBase, table=True):
-    password: str = Field()
-    is_superuser: bool = Field(False)
+class User(UserBase, table=True):
+    pass
 
 
 class UserCreate(UserBase):
-    password: str = Field()
+    hash: str = Field()
+    auth_date: int = Field()
 
 
-class UserRead(UUIDModel, TimestampModel, UserBase):
-    is_superuser: bool = Field()
+class UserRead(UserBase):
+    pass

@@ -2,11 +2,12 @@
 Database
 """
 
-from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncEngine
+from sqlalchemy.ext.asyncio import (AsyncEngine, async_sessionmaker,
+                                    create_async_engine)
 from sqlmodel.ext.asyncio.session import AsyncSession
 
 from app import repositories as repos
-from . import settings
+from app.core import settings
 
 
 def get_async_engine() -> AsyncEngine:
@@ -31,5 +32,4 @@ class Database:
         session: AsyncSession,
     ):
         self.session = session
-
         self.user = repos.UserRepo(session=session)

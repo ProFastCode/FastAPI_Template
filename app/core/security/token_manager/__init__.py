@@ -1,5 +1,3 @@
-from .token_manager import TokenManager
+from .token_manager import JWTTokenManager
 
-tkn_manager = TokenManager()
-
-__all__ = ["TokenManager", "tkn_manager"]
+__all__ = ['JWTTokenManager']

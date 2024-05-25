@@ -1,6 +1,7 @@
 """
 Settings
 """
+import hashlib
 
 from pydantic import PostgresDsn
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -8,7 +9,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
-        env_file=".env", env_file_encoding="utf-8", case_sensitive=True
+        env_file='.env', env_file_encoding='utf-8', case_sensitive=True
     )
 
     # APP
@@ -28,7 +29,7 @@ class Settings(BaseSettings):
     @property
     def pg_dns(self) -> PostgresDsn:
         dns = PostgresDsn.build(
-            scheme="postgresql+asyncpg",
+            scheme='postgresql+asyncpg',
             username=self.POSTGRES_USER,
             password=self.POSTGRES_PASSWORD,
             host=self.POSTGRES_HOST,
@@ -36,6 +37,13 @@ class Settings(BaseSettings):
             path=self.POSTGRES_DATABASE,
         )
         return dns
+
+    # Telegram
+    TELEGRAM_BOT_TOKEN: str
+
+    @property
+    def telegram_bot_token_hash(self):
+        return hashlib.sha256(self.TELEGRAM_BOT_TOKEN.encode())
 
 
 settings = Settings()

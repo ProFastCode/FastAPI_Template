@@ -1,17 +1,30 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from typing_extensions import Annotated
 
 from app import models
-from app.core.security import tkn_manager
+from app.api import deps
+from app.core import exps
+from app.core.security import JWTTokenManager
 
 router = APIRouter()
 
 
-@router.post("/pair/", response_model=models.PairTokens)
-async def new_pair_tokens(data: models.AuthToken):
+@router.post('/pair/', response_model=models.PairTokens)
+async def new_pair_tokens(
+    data: models.AuthToken,
+    tkn_manager: Annotated[JWTTokenManager, Depends(deps.get_tkn_manager)],
+):
     """
-    Получить парные токены
+    Get pair tokens
     """
-    payload = tkn_manager.decode_auth_token(data.auth_token)
-    long_token = tkn_manager.create_long_token(payload)
-    short_token = tkn_manager.create_short_token(payload)
-    return models.PairTokens(long_token=long_token, short_token=short_token)
+
+    payload = tkn_manager.decode_token(data.auth_token)
+    if payload.get('type') != 'auth':
+        raise exps.TOKEN_INVALID
+    payload['type'] = 'access'
+    access_token = tkn_manager.encode_token(payload, 120)
+    payload['type'] = 'refresh'
+    refresh_token = tkn_manager.encode_token(payload, 1440)
+    return models.PairTokens(
+        access_token=access_token, refresh_token=refresh_token
+    )

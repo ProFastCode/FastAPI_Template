@@ -1,71 +1,34 @@
-from datetime import datetime, timedelta
+import datetime as dt
 
-from jose import jwt, JWTError
+from jose import JWTError, jwt
+from jose.constants import ALGORITHMS
 
-from app.core import settings, exps
-from .abstract import AbstractTokenManager
-from ...structures import TokenType
-
-ALGORITHM = "HS256"
+from app.core import exps, settings
 
 
-class JWTTokenManager(AbstractTokenManager):
-    def _decode_token(self, token: str) -> dict:
+class JWTTokenManager:
+    def __init__(self, secret_key: str = settings.APP_SECRET_KEY):
+        self.secret_key: str = secret_key
+
+    def decode_token(self, token: str) -> dict:
         try:
-            payload = jwt.decode(token, settings.APP_SECRET_KEY, algorithms=[ALGORITHM])
+            payload = jwt.decode(
+                token, self.secret_key, algorithms=[ALGORITHMS.HS256]
+            )
         except JWTError:
             raise exps.TOKEN_INVALID
+
+        exp = payload.get('exp')
+        if exp and dt.datetime.now(dt.UTC).timestamp() > exp:
+            raise exps.TOKEN_EXPIRED
+
         return payload
 
-    def _create_token(self, payload: dict) -> str:
-        token = jwt.encode(payload, settings.APP_SECRET_KEY, algorithm=ALGORITHM)
-        return token
-
-    @classmethod
-    def expand_payload(cls, token_type: TokenType, payload: dict, minutes: int) -> dict:
-        new_payload = dict(
-            token_type=token_type.value,
-            payload=payload,
-            exp=datetime.now() + timedelta(minutes=minutes),
-        )
-        return new_payload
-
-    @classmethod
-    def validate_payload(cls, token_type: TokenType, payload: dict) -> None:
-        exp: float = payload.get("exp")
-        if not (exp > datetime.now().timestamp()):
-            raise exps.TOKEN_EXPIRED
-        if payload.get("token_type") != token_type.value:
-            raise exps.TOKEN_INVALID_TYPE
-
-
-class TokenManager(JWTTokenManager):
-    def decode_auth_token(self, token: str) -> dict:
-        payload = self._decode_token(token)
-        self.validate_payload(TokenType.AUTH, payload)
-        return payload.get("payload")
-
-    def create_auth_token(self, payload: dict) -> str:
-        payload = self.expand_payload(TokenType.AUTH, payload, 15)
-        token = self._create_token(payload)
-        return token
-
-    def decode_long_token(self, token: str) -> dict:
-        payload = self._decode_token(token)
-        self.validate_payload(TokenType.LONG, payload)
-        return payload.get("payload")
-
-    def create_long_token(self, payload: dict) -> str:
-        payload = self.expand_payload(TokenType.LONG, payload, 52560)
-        token = self._create_token(payload)
-        return token
-
-    def decode_short_token(self, token: str) -> dict:
-        payload = self._decode_token(token)
-        self.validate_payload(TokenType.SHORT, payload)
-        return payload.get("payload")
-
-    def create_short_token(self, payload: dict) -> str:
-        payload = self.expand_payload(TokenType.SHORT, payload, 120)
-        token = self._create_token(payload)
+    def encode_token(self, payload: dict, minutes: int | None = None) -> str:
+        claims = {'payload': payload}
+        if minutes:
+            claims['exp'] = dt.datetime.now(dt.UTC) + dt.timedelta(
+                minutes=minutes
+            )
+        token = jwt.encode(claims, self.secret_key, algorithm=ALGORITHMS.HS256)
         return token

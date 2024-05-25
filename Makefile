@@ -9,14 +9,25 @@ help:
 	@echo "  migrate		Alembic migrate database"
 	@echo "  generate		Alembic generate database"
 
+
+.PHONY:	blue
+blue:
+	poetry run blue app/
+
+.PHONY: isort
+isort:
+	poetry run isort app/
+
+.PHONY: ruff
+ruff:
+	poetry run ruff check app/ --fix --respect-gitignore
+
 .PHONY: ref
-ref:
-	poetry run ruff ./app --fix && poetry run black ./app
+ref: blue isort ruff
 
 .PHONY: dev
 dev:
-	uvicorn app:app --reload --access-log --log-level debug
-
+	poetry run fastapi dev app
 
 .PHONY: generate
 generate:
