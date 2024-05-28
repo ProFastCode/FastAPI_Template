@@ -6,6 +6,7 @@ help:
 	@echo "AVAILABLE COMMANDS"
 	@echo "  dev		Start the app"
 	@echo "  ref		Reformat code"
+	@echo "  req		pyproject.toml >> requirements.txt"
 	@echo "  migrate		Alembic migrate database"
 	@echo "  generate		Alembic generate database"
 
@@ -29,10 +30,9 @@ ref: blue isort ruff
 dev:
 	poetry run fastapi dev app
 
-.PHONY: build
-build:
+.PHONY: req
+req:
 	poetry export -f requirements.txt --output requirements.txt
-	docker compose build
 
 .PHONY: generate
 generate:
