@@ -27,7 +27,7 @@ class JWTManager:
     def encode_token(self, payload: dict, minutes: int) -> str:
         claims = {
             'payload': payload,
-            'exp': dt.datetime.now(dt.UTC) + dt.timedelta(minutes=minutes)
+            'exp': dt.datetime.now(dt.UTC) + dt.timedelta(minutes=minutes),
         }
         token = jwt.encode(claims, self.secret_key, algorithm=ALGORITHMS.HS256)
         return token

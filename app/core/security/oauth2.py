@@ -1,8 +1,12 @@
 import hashlib
 import hmac
 
+from fastapi.security import HTTPBearer
 
-class TgAuth:
+scheme = HTTPBearer()
+
+
+class TG:
     def __init__(self, token: str, username: str):
         self.token = token
         self.username = username

@@ -9,7 +9,7 @@ from app import models
 from app.api import deps
 from app.core import exps
 from app.core.db import Database
-from app.core.security import JWTManager, oauth
+from app.core.security import JWTManager, oauth2
 
 router = APIRouter(prefix='/auth')
 
@@ -18,8 +18,8 @@ router = APIRouter(prefix='/auth')
 async def telegram(
     user: models.UserCreate,
     db: Annotated[Database, Depends(deps.get_db)],
+    oauth_telegram: Annotated[oauth2.TG, Depends(deps.get_oauth_tg)],
     jwt_manager: Annotated[JWTManager, Depends(deps.get_jwt_manager)],
-    oauth_telegram: Annotated[oauth, Depends(deps.get_oauth_telegram)],
 ):
     """
     Get auth token
