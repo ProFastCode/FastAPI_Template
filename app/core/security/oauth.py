@@ -1,15 +1,13 @@
 import hashlib
 import hmac
 
-from app.core import settings
+from fastapi.security import HTTPBearer
+
+oauth = HTTPBearer()
 
 
-class TelegramAuth:
-    def __init__(
-        self,
-        token: str = settings.TELEGRAM_BOT_TOKEN,
-        username: str = settings.TELEGRAM_BOT_USERNAME,
-    ):
+class Telegram:
+    def __init__(self, token: str, username: str):
         self.token = token
         self.username = username
 

@@ -22,8 +22,12 @@ async def new_pair_tokens(
     if payload.get('type') != 'auth':
         raise exps.TOKEN_INVALID
     payload['type'] = 'access'
-    access_token = models.AccessToken(token=jwt_manager.encode_token(payload, 120))
+    access_token = models.AccessToken(
+        token=jwt_manager.encode_token(payload, 120)
+    )
     payload['type'] = 'refresh'
-    refresh_token = models.RefreshToken(token=jwt_manager.encode_token(payload, 1440))
+    refresh_token = models.RefreshToken(
+        token=jwt_manager.encode_token(payload, 1440)
+    )
     tokens = models.PairTokens(access=access_token, refresh=refresh_token)
     return tokens
