@@ -34,10 +34,10 @@ dev:
 req:
 	poetry export -f requirements.txt --output requirements.txt
 
-.PHONY: generate
-generate:
-	poetry run alembic revision --autogenerate
-
 .PHONY: migrate
 migrate:
 	poetry run alembic upgrade head
+
+.PHONY: generate
+generate:
+	poetry run alembic revision --autogenerate
