@@ -19,23 +19,23 @@ class Settings(BaseSettings):
     APP_API_PREFIX: str
 
     # DATABASE
+    POSTGRES_DB: str
     POSTGRES_HOST: str
     POSTGRES_PORT: int
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str
-    POSTGRES_DATABASE: str
 
     @property
-    def pg_dns(self) -> PostgresDsn:
-        dns = PostgresDsn.build(
+    def pg_dsn(self) -> PostgresDsn:
+        dsn = PostgresDsn.build(
             scheme='postgresql+asyncpg',
             username=self.POSTGRES_USER,
             password=self.POSTGRES_PASSWORD,
             host=self.POSTGRES_HOST,
             port=self.POSTGRES_PORT,
-            path=self.POSTGRES_DATABASE,
+            path=self.POSTGRES_DB,
         )
-        return dns
+        return dsn
 
     # Telegram
     TELEGRAM_BOT_TOKEN: str

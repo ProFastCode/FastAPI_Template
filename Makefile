@@ -29,6 +29,11 @@ ref: blue isort ruff
 dev:
 	poetry run fastapi dev app
 
+.PHONY: build
+build:
+	poetry export -f requirements.txt --output requirements.txt
+	docker compose build
+
 .PHONY: generate
 generate:
 	poetry run alembic revision --autogenerate

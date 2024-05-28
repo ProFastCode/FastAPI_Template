@@ -3,13 +3,16 @@ Dependencies
 """
 
 from fastapi import Depends
-from fastapi.security import HTTPAuthorizationCredentials
 from typing_extensions import Annotated
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
 from app import models
 from app.core import exps, settings
 from app.core.db import Database, SessionLocal
-from app.core.security import JWTManager, oauth
+from app.core.security import JWTManager, TgAuth
+
+
+oauth = HTTPBearer()
 
 
 async def get_db() -> Database:
@@ -21,14 +24,14 @@ async def get_jwt_manager() -> JWTManager:
     return JWTManager(settings.APP_SECRET_KEY)
 
 
-async def get_oauth_telegram() -> oauth.Telegram:
-    return oauth.Telegram(
+async def get_tg_auth() -> TgAuth:
+    return TgAuth(
         settings.TELEGRAM_BOT_TOKEN, settings.TELEGRAM_BOT_USERNAME
     )
 
 
 async def get_current_user(
-    credentials: Annotated[HTTPAuthorizationCredentials, oauth.oauth],
+    credentials: Annotated[HTTPAuthorizationCredentials, oauth],
     jwt_manager: Annotated[JWTManager, Depends(get_jwt_manager)],
     db: Annotated[Database, Depends(get_db)],
 ) -> models.User:

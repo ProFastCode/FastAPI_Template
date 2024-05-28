@@ -1,12 +1,8 @@
 import hashlib
 import hmac
 
-from fastapi.security import HTTPBearer
 
-oauth = HTTPBearer()
-
-
-class Telegram:
+class TgAuth:
     def __init__(self, token: str, username: str):
         self.token = token
         self.username = username

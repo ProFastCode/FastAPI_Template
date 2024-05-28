@@ -12,7 +12,7 @@ from app.core import settings
 
 def get_async_engine() -> AsyncEngine:
     engine: AsyncEngine = create_async_engine(
-        settings.pg_dns.unicode_string(), echo=False, future=True
+        settings.pg_dsn.unicode_string(), echo=False, future=True
     )
     return engine
 
