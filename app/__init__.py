@@ -9,11 +9,14 @@ from app.core import settings
 
 app = FastAPI(
     title=settings.APP_TITLE,
+    root_path=settings.APP_PATH,
     version=settings.APP_VERSION,
-    description=settings.APP_DESCRIPTION,
-    docs_url=f'{settings.APP_API_PREFIX}/docs',
-    openapi_url=f'{settings.APP_API_PREFIX}/openapi.json',
-    swagger_ui_oauth2_redirect_url=f'{settings.APP_API_PREFIX}/docs/oauth2-redirect',
+    description=settings.app_description,
+    contact={
+        "name": "Fast Code",
+        "url": "https://fast-code.pro/",
+        "email": "fast.code.auth@gmail.com",
+    }
 )
 
-app.include_router(api.api_router, prefix=settings.APP_API_PREFIX)
+app.include_router(api.api_router)

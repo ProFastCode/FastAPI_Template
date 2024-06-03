@@ -1,3 +1,3 @@
 from .jwt_manager import JWTManager
 
-__all__ = ['JWTManager', 'oauths.py']
+__all__ = ['JWTManager']

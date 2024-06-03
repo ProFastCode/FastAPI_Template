@@ -8,3 +8,5 @@ from . import retrieve
 
 router = APIRouter(prefix='/users', tags=['users'])
 router.include_router(retrieve.router)
+
+__all__ = ['router']

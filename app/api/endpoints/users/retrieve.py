@@ -12,8 +12,10 @@ router = APIRouter()
 
 
 @router.get('/', response_model=models.UserRead)
-async def read(user: Annotated[models.User, Depends(deps.get_current_user)]):
+async def retrieve(
+    user: Annotated[models.User, Depends(deps.get_current_user)]
+):
     """
-    Get data user
+    Get user
     """
     return user
