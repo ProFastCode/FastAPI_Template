@@ -2,12 +2,6 @@
 Database Models Module
 """
 
-from .token import PairTokens
-from .user import User, UserCreate, UserRead
+from . import token, user
 
-__all__ = [
-    'User',
-    'UserRead',
-    'UserCreate',
-    'PairTokens',
-]
+__all__ = ['user', 'token']

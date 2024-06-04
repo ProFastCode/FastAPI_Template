@@ -2,15 +2,14 @@
 User Model
 """
 
-from sqlmodel import BigInteger, Field, SQLModel
+from sqlmodel import Field, SQLModel
 
 from .base import IDModel
 
 
 class UserBase(SQLModel):
-    full_name: str = Field()
-    photo_url: str = Field()
-    telegram_id: int = Field(sa_type=BigInteger, index=True, unique=True)
+    email: str = Field()
+    password: str = Field()
 
 
 class User(IDModel, UserBase, table=True):

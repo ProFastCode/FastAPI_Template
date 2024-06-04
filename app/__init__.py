@@ -13,10 +13,10 @@ app = FastAPI(
     version=settings.APP_VERSION,
     description=settings.app_description,
     contact={
-        "name": "Fast Code",
-        "url": "https://fast-code.pro/",
-        "email": "fast.code.auth@gmail.com",
-    }
+        'name': 'Fast Code',
+        'url': 'https://fast-code.pro/',
+        'email': 'fast.code.auth@gmail.com',
+    },
 )
 
 app.include_router(api.api_router)

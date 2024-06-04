@@ -1,9 +1,9 @@
 from fastapi import APIRouter
 
-from . import oauth2, tokens
+from . import email, tokens
 
 router = APIRouter(prefix='/auth', tags=['auth'])
 router.include_router(tokens.router)
-router.include_router(oauth2.router)
+router.include_router(email.router)
 
 __all__ = ['router']
