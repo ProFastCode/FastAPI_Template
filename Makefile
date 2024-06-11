@@ -32,7 +32,7 @@ dev:
 
 .PHONY: req
 req:
-	poetry export -f requirements.txt --output requirements.txt
+	poetry export --without-hashes --without-urls | awk '{ print $1 }' FS=';' > requirements.txt
 
 .PHONY: migrate
 migrate:
