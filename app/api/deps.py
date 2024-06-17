@@ -30,8 +30,6 @@ async def get_current_user(
     db: Annotated[Database, Depends(get_db)],
 ) -> User:
     payload = jwt_manager.decode_token(token)
-    if payload.get('type') != 'access':
-        raise exps.TOKEN_INVALID
     if not (user := await db.user.retrieve_one(ident=payload.get('id'))):
         raise exps.USER_NOT_FOUND
     return user

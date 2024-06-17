@@ -20,5 +20,5 @@ class UserCreate(UserBase):
     pass
 
 
-class UserRead(IDModel, UserBase):
-    pass
+class UserRead(IDModel):
+    email: str = Field()
