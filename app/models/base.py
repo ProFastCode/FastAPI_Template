@@ -5,7 +5,8 @@ from functools import partial
 from sqlalchemy.types import BigInteger, TypeDecorator
 from sqlmodel import Field, SQLModel
 
-datetime_utcnow = partial(dt.datetime.now, tz=dt.UTC)
+
+datetime_utc_now = partial(dt.datetime.now, tz=dt.UTC)
 
 
 class UnixType(TypeDecorator):
@@ -15,15 +16,19 @@ class UnixType(TypeDecorator):
     def load_dialect_impl(self, dialect):
         return dialect.type_descriptor(BigInteger())
 
-    def process_bind_param(self, value, dialect) -> int | None:
-        if isinstance(value, (dt.datetime, dt.date)):
+    def process_bind_param(
+        self, value: dt.date | dt.datetime | str | None, dialect
+    ) -> int | None:
+        if isinstance(value, dt.datetime):
             return int(value.timestamp())
-        return value
+        elif isinstance(value, dt.date):
+            return int(dt.datetime.combine(value, dt.time.min).timestamp())
+        elif isinstance(value, str):
+            return int(dt.datetime.fromisoformat(value).timestamp())
 
-    def process_result_value(self, value, dialect) -> dt:
+    def process_result_value(self, value: int | None, dialect) -> dt.datetime | None:
         if isinstance(value, int):
             return dt.datetime.fromtimestamp(value, dt.UTC)
-        return value
 
 
 class IDModel(SQLModel):
@@ -42,17 +47,17 @@ class UUIDModel(SQLModel):
 
 
 class TimestampModel(SQLModel):
-    created_at: int | dt.datetime = Field(
-        default_factory=datetime_utcnow,
+    created_at: int | str | dt.datetime = Field(
+        default_factory=datetime_utc_now,
         sa_type=UnixType,
         nullable=False,
     )
-    updated_at: int | dt.datetime | None = Field(
-        default_factory=datetime_utcnow,
+    updated_at: int | str | dt.datetime | None = Field(
+        default_factory=datetime_utc_now,
         sa_type=UnixType,
         nullable=True,
-        sa_column_kwargs={'onupdate': datetime_utcnow},
+        sa_column_kwargs={"onupdate": datetime_utc_now},
     )
 
-    class Config:
+    class Config(SQLModel.Config):
         arbitrary_types_allowed = True
