@@ -59,5 +59,5 @@ class TimestampModel(SQLModel):
         sa_column_kwargs={"onupdate": datetime_utc_now},
     )
 
-    class Config(SQLModel.Config):
+    class Config:
         arbitrary_types_allowed = True
