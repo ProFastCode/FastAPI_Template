@@ -23,7 +23,7 @@ jobs:
 
       - name: Fetch /docs page
         run: |
-          docker-compose exec backend curl http://0.0.0.0:8000/api/docs -o index.html
+          curl http://0.0.0.0:8000/api/docs -o index.html
 
       - name: Commit index.html
         run: |
