@@ -32,10 +32,8 @@ jobs:
             sleep 1
           done
       - name: Commit index.html
-        env:
-          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           git config --global user.name 'Generate page docs'
           git add docs/index.html
           git commit -m "Update page docs"
-          git push "https://$GH_PAT@github.com/ProFastCode/FastAPI_Template.git" HEAD:main
+          git push origin main
