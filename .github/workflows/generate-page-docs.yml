@@ -11,15 +11,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Build Docker image
+      - name: Build Docker
         run: |
           cp .env.dist .env
           docker-compose build
 
-      - name: Run FastAPI in Docker
+      - name: Run Docker
         run: |
           docker-compose up -d
-          sleep 5
 
       - name: Create docs directory if it doesn't exist
         run: |
@@ -27,17 +26,16 @@ jobs:
             mkdir -p docs
           fi
 
-      - name: Fetch /docs page
+      - name: Fetch page docs
         run: |
           until $(curl -o docs/index.html --silent --head --fail http://0.0.0.0:8000/api/docs); do
-            printf '.'
             sleep 1
           done
 
-      - name: Commit index.html
+      - name: Commit page docs
         run: |
-          git config --global user.name 'GitHub Actions'
+          git config --global user.name 'Generate page docs'
           git config --global user.email '<>'
-          git add index.html
-          git commit -m "Update docs page" || exit 0
+          git add docs/index.html
+          git commit -m "Update page docs" || exit 0
           git push
