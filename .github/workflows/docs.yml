@@ -23,7 +23,10 @@ jobs:
 
       - name: Fetch /docs page
         run: |
-          curl http://0.0.0.0:8000/api/docs -o index.html
+          until $(curl -o /docs/index.html --silent --head --fail http://0.0.0.0:8000/api/docs); do
+            printf '.'
+            sleep 1
+          done
 
       - name: Commit index.html
         run: |
