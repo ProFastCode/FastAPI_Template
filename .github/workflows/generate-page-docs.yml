@@ -31,11 +31,11 @@ jobs:
           until $(curl -o docs/index.html --silent --head --fail http://0.0.0.0:8000/api/docs); do
             sleep 1
           done
-
-      - name: Commit page docs
+      - name: Commit index.html
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           git config --global user.name 'Generate page docs'
-          git config --global user.email '<>'
           git add docs/index.html
-          git commit -m "Update page docs" || exit 0
-          git push
+          git commit -m "Update page docs"
+          git push "https://$GH_PAT@github.com/ProFastCode/FastAPI_Template.git" HEAD:main
