@@ -21,9 +21,15 @@ jobs:
           docker-compose up -d
           sleep 5
 
+      - name: Create docs directory if it doesn't exist
+        run: |
+          if [ ! -d "docs" ]; then
+            mkdir -p docs
+          fi
+
       - name: Fetch /docs page
         run: |
-          until $(curl -o /docs/index.html --silent --head --fail http://0.0.0.0:8000/api/docs); do
+          until $(curl -o docs/index.html --silent --head --fail http://0.0.0.0:8000/api/docs); do
             printf '.'
             sleep 1
           done
