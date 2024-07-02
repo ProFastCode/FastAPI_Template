@@ -1,8 +1,9 @@
 name: Generate page docs
 
-on:
-  push:
-    branches: ["main"]
+on: push
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -31,6 +32,15 @@ jobs:
           until $(curl -o docs/index.html --silent --head --fail http://0.0.0.0:8000/api/docs); do
             sleep 1
           done
+
+      - uses: actions/checkout@v3
+      - run: |
+          date > generated.txt
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add docs/index.html
+          git commit -m "generated"
+          git push
 
       - name: Commit files
         run: |
