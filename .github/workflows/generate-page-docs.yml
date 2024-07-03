@@ -38,8 +38,5 @@ jobs:
         with:
           default_author: github_actions
 
-      # - name: Push changes
-      #  uses: ad-m/github-push-action@master
-      # with:
-      #  github_token: ${{ secrets.GH_PAT }}
-      #  force_with_lease: true
+        env:
+          APP_PATH: "/docs"
