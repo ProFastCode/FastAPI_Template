@@ -33,12 +33,7 @@ jobs:
             sleep 1
           done
           curl -o docs/index.html --silent --fail http://0.0.0.0:8000/api/docs
-
-      - uses: peter-evans/find-replace-action@v2
-        with:
-          find: "/api/openapi.json"
-          replace: "openapi.json"
-          include: "docs/index.html"
+          sed 's:/api/openapi.json:openapi.json:g' docs/index.html > docs/i.html
 
       - uses: EndBug/add-and-commit@v9
         with:
