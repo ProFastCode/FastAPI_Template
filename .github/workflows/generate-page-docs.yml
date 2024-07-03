@@ -29,9 +29,10 @@ jobs:
 
       - name: Fetch page docs
         run: |
-          until $(curl -o docs/index.html --silent --head --fail http://0.0.0.0:8000/api/docs); do
+          until $(curl -o docs/index.html --silent --fail http://0.0.0.0:8000/api/docs); do
             sleep 1
           done
+          curl -o docs/openapi.json --silent --fail http://0.0.0.0:8000/api/openapi.json
 
       - uses: EndBug/add-and-commit@v9
         with:
