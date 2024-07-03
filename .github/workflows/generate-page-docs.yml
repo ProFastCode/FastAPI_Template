@@ -33,7 +33,7 @@ jobs:
             sleep 1
           done
           curl -o docs/index.html --silent --fail http://0.0.0.0:8000/api/docs
-          sed 's:/api/openapi.json:openapi.json:g' docs/index.html > docs/i.html
+          sed 's:/api/openapi.json:openapi.json:g' docs/index.html > docs/index.html
 
       - uses: EndBug/add-and-commit@v9
         with:
