@@ -11,9 +11,11 @@ from typing_extensions import (
     Sequence,
     Type,
     TypeVar,
+    TypeAlias,
 )
 
 AbstractModel = TypeVar("AbstractModel", bound=sm.SQLModel)
+WhereClauses: TypeAlias = Optional[List[sm.DefaultClause | bool]]
 
 
 class Repository(Generic[AbstractModel], metaclass=abc.ABCMeta):
@@ -32,7 +34,7 @@ class Repository(Generic[AbstractModel], metaclass=abc.ABCMeta):
         self,
         *,
         ident: Optional[int] = None,
-        where_clauses: Optional[List[Optional[sm.DefaultClause]] | List[bool]] = None,
+        where_clauses: WhereClauses = None,
     ) -> Optional[AbstractModel]:
         if ident is not None:
             return await self.session.get(self.model, ident)
@@ -44,7 +46,7 @@ class Repository(Generic[AbstractModel], metaclass=abc.ABCMeta):
 
     async def retrieve_many(
         self,
-        where_clauses: Optional[List[Optional[sm.DefaultClause]] | List[bool]] = None,
+        where_clauses: WhereClauses = None,
         limit: Optional[int] = None,
         order_by: Optional[Any] = None,
     ) -> Optional[Sequence[AbstractModel]]:
