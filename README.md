@@ -1,4 +1,4 @@
-[Swagger](docs)
+[Swagger](https://profastcode.github.io/FastAPI_Template/docs/)
 
 ## Настройка
 
