@@ -21,22 +21,12 @@ jobs:
         run: |
           docker-compose up -d
 
-      - name: Create docs directory if it doesn't exist
-        run: |
-          if [ ! -d "docs" ]; then
-            mkdir -p docs
-          fi
-
       - name: Fetch page docs
         run: |
-          until $(curl -o docs/index.html --silent --fail http://0.0.0.0:8000/api/docs); do
+          until $(curl -o docs/openapi.json --silent --fail http://0.0.0.0:8000/api/openapi.json); do
             sleep 1
           done
-          curl -o docs/openapi.json --silent --fail http://0.0.0.0:8000/api/openapi.json
 
       - uses: EndBug/add-and-commit@v9
         with:
           default_author: github_actions
-
-        env:
-          APP_PATH: "/docs"
