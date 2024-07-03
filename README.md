@@ -1,4 +1,4 @@
-[Swagger](/docs)
+[Swagger](docs)
 
 ## Настройка
 
