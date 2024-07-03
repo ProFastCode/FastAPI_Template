@@ -13,13 +13,13 @@
     <!-- `SwaggerUIBundle` is now available on the page -->
     <script>
     const ui = SwaggerUIBundle({
-        url: '/api/openapi.json',
+        url: '/docs/openapi.json',
     "dom_id": "#swagger-ui",
 "layout": "BaseLayout",
 "deepLinking": true,
 "showExtensions": true,
 "showCommonExtensions": true,
-oauth2RedirectUrl: window.location.origin + '/api/docs/oauth2-redirect',
+oauth2RedirectUrl: window.location.origin + '/docs/docs/oauth2-redirect',
     presets: [
         SwaggerUIBundle.presets.apis,
         SwaggerUIBundle.SwaggerUIStandalonePreset
