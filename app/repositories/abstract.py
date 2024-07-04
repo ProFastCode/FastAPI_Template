@@ -24,7 +24,7 @@ class Repository(Generic[AbstractModel], metaclass=abc.ABCMeta):
         self.session = session
 
     async def create(self, model: AbstractModel) -> AbstractModel:
-        self.model.model_validate(model)
+        model = self.model.model_validate(model)
         self.session.add(model)
         await self.session.commit()
         await self.session.refresh(model)
