@@ -11,11 +11,10 @@ app = FastAPI(
     title=settings.APP_TITLE,
     root_path=settings.APP_PATH,
     version=settings.APP_VERSION,
-    description=settings.app_description,
     contact={
-        'name': 'Fast Code',
-        'url': 'https://fast-code.pro/',
-        'email': 'fast.code.auth@gmail.com',
+        "name": "Fast Code",
+        "url": "https://fast-code.pro/",
+        "email": "fast.code.auth@gmail.com",
     },
 )
 

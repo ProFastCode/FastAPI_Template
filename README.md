@@ -1,27 +1,19 @@
-[Swagger](https://profastcode.github.io/FastAPI_Template/docs/)
+[Preview API](https://profastcode.github.io/FastAPI_Template/docs/)
 
 ## Настройка
 
 #### Настройка происходит в файле .env его нет в репозитории, т.к. он конфиденциален, но я предоставил файл .env.dist создайте на его основе файл .env и проведите все необходимые настройки
 
-## Установка зависимостей
-
-#### В основе проекта лежит пакетный менеджер poetry
-
-`poetry install` - Вариант с использованием poetry.
-
-`pip install -r requirements.txt` - Вариант с использованием pip.
-
 ## Документация по make командам
 
-`make help` - Команда help отображает список доступных команд и их описание.
+`make help` - Отображает команды и их описание.
 
-`make ref` - Команда ref используется для форматирования кода с помощью ruff и black.
+`make ref` - Форматирует код.
 
-`make dev` - Команда dev запускает приложение в режиме разработки.
+`make dev` - Запускает приложение в режиме разработки.
 
-`make req` - Команда req обновляет зависимости в [requirements.txt](requirements.txt)
+`make req` - Обновляет зависимости в [requirements.txt](requirements.txt)
 
-`make migrate` - Команда migrate применяет все ожидающие миграции к базе данных с помощью alembic.
+`make migrate` - Применяет все миграции с помощью alembic.
 
-`make generate` - Команда generate используется для генерации новой миграции базы данных с помощью alembic.
+`make generate` - Генерирует новую миграцию с помощью alembic.

@@ -17,11 +17,6 @@ class Settings(BaseSettings):
     APP_VERSION: str = "beta"
     APP_SECRET_KEY: str = "abc"
 
-    @property
-    def app_description(self):
-        with open("README.md", "r", encoding="utf-8") as f:
-            return f.read()
-
     # DATABASE
     POSTGRES_DB: str = "postgres"
     POSTGRES_HOST: str = "127.0.0.1"
