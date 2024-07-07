@@ -1,19 +1,22 @@
 [Preview API](https://profastcode.github.io/FastAPI_Template/docs/)
 
-## Настройка
+# FastAPI Template
 
-#### Настройка происходит в файле .env его нет в репозитории, т.к. он конфиденциален, но я предоставил файл .env.dist создайте на его основе файл .env и проведите все необходимые настройки
+**Create a .env file based on .env.dist and make all the necessary customizations.**
 
-## Документация по make командам
+### To run the application in a docker container, run the command
 
-`make help` - Отображает команды и их описание.
+`docker-compose up -d` or `make docker`
 
-`make ref` - Форматирует код.
+### To run the application without a docker container, complete follow these steps
 
-`make dev` - Запускает приложение в режиме разработки.
+1. Install dependencies.
 
-`make req` - Обновляет зависимости в [requirements.txt](requirements.txt)
+    `poetry install` or `pip install -r requirements.txt`
+2. Run application.
 
-`make migrate` - Применяет все миграции с помощью alembic.
+    `python3 -m app` or `make run`
 
-`make generate` - Генерирует новую миграцию с помощью alembic.
+### Make documentation
+
+`make help`make generate` - Генерирует новую миграцию с помощью alembic.
