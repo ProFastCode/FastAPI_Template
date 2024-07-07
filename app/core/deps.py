@@ -4,14 +4,11 @@ Dependencies
 
 from fastapi import Depends
 from fastapi.security import APIKeyHeader
-from passlib.context import CryptContext
 from typing_extensions import Annotated, AsyncGenerator
 
 from app.models.user import User
 
 from . import Security, db, exps
-
-pwd_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
 
 
 async def get_db() -> AsyncGenerator[db.Database]:

@@ -1,7 +1,7 @@
 import datetime as dt
 
-from jose import JWTError, jwt
-from jose.constants import ALGORITHMS
+import jwt
+from jwt import PyJWTError
 
 from app.core import exps
 
@@ -12,10 +12,8 @@ class JWT:
 
     def decode_token(self, token: str) -> dict | None:
         try:
-            payload = jwt.decode(
-                token, self.secret_key, algorithms=[ALGORITHMS.HS256]
-            )
-        except JWTError:
+            payload = jwt.decode(token, self.secret_key, algorithms=['HS256'])
+        except PyJWTError:
             raise exps.TOKEN_INVALID
 
         exp = payload.get('exp')
@@ -28,4 +26,4 @@ class JWT:
             'payload': payload,
             'exp': dt.datetime.now(dt.UTC) + dt.timedelta(minutes=minutes),
         }
-        return jwt.encode(claims, self.secret_key, algorithm=ALGORITHMS.HS256)
+        return jwt.encode(claims, self.secret_key, algorithm='HS256')
