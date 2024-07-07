@@ -5,7 +5,6 @@ from functools import partial
 from sqlalchemy.types import BigInteger, TypeDecorator
 from sqlmodel import Field, SQLModel
 
-
 datetime_utc_now = partial(dt.datetime.now, tz=dt.UTC)
 
 
@@ -26,7 +25,9 @@ class UnixType(TypeDecorator):
         elif isinstance(value, str):
             return int(dt.datetime.fromisoformat(value).timestamp())
 
-    def process_result_value(self, value: int | None, dialect) -> dt.datetime | None:
+    def process_result_value(
+        self, value: int | None, dialect
+    ) -> dt.datetime | None:
         if isinstance(value, int):
             return dt.datetime.fromtimestamp(value, dt.UTC)
 
@@ -56,7 +57,7 @@ class TimestampModel(SQLModel):
         default_factory=datetime_utc_now,
         sa_type=UnixType,
         nullable=True,
-        sa_column_kwargs={"onupdate": datetime_utc_now},
+        sa_column_kwargs={'onupdate': datetime_utc_now},
     )
 
     class Config:

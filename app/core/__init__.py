@@ -2,6 +2,6 @@
 Core App Module
 """
 
-from .settings import settings
+from .security import Security
 
-__all__ = ['settings']
+__all__ = ["Security"]

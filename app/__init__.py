@@ -5,7 +5,7 @@ Init App Module
 from fastapi import FastAPI
 
 from app import api
-from app.core import settings
+from app.core.settings import settings
 
 app = FastAPI(
     title=settings.APP_TITLE,
