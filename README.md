@@ -6,7 +6,7 @@
 
 ### To run the application in a docker container, run the command
 
-`docker-compose up -d` or `make docker`
+`docker-compose up -d`
 
 ### To run the application without a docker container, complete follow these steps
 
@@ -15,8 +15,8 @@
     `poetry install` or `pip install -r requirements.txt`
 2. Run application.
 
-    `python3 -m app` or `make run`
+    `poetry run fastapi dev app` or `make dev`
 
 ### Make documentation
 
-`make help`make generate` - Генерирует новую миграцию с помощью alembic.
+`make help`
