@@ -6,27 +6,30 @@ from fastapi import Depends
 from fastapi.security import APIKeyHeader
 from typing_extensions import Annotated, AsyncGenerator
 
+from app.core.db import Database, SessionLocal
+from app.core.logic import Logic
+from app.core.security import Security
 from app.models.user import User
 
-from . import Security, db, exps
 
-
-async def get_db() -> AsyncGenerator[db.Database]:
-    async with db.SessionLocal() as session:
-        yield db.Database(session)
+async def get_db() -> AsyncGenerator[Database]:
+    async with SessionLocal() as session:
+        yield Database(session)
 
 
 async def get_security() -> Security:
     return Security()
 
 
+async def get_logic(
+    db: Annotated[Database, Depends(get_db)],
+    security: Annotated[Security, Depends(get_security)],
+) -> Logic:
+    return Logic(db, security)
+
+
 async def get_current_user(
     token: Annotated[str, Depends(APIKeyHeader(name='access-token'))],
-    security: Annotated[Security, Depends(get_security)],
-    db: Annotated[db.Database, Depends(get_db)],
+    logic: Annotated[Logic, Depends(get_logic)],
 ) -> User | None:
-    if payload := security.jwt.decode_token(token):
-        if not (user := await db.user.retrieve_one(ident=payload.get('id'))):
-            raise exps.USER_NOT_FOUND
-        else:
-            return user
+    return await logic.users.retrieve_by_token(token)
