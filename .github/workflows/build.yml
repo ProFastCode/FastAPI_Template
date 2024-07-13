@@ -1,0 +1,22 @@
+name: Generate page docs
+
+on: push
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker
+        run: |
+          cp .env.dist .env
+          docker-compose build
+
+      - name: Run Docker
+        run: |
+          docker-compose up -d
