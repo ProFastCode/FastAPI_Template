@@ -6,7 +6,7 @@ permissions:
   contents: write
 
 jobs:
-  build:
+  generate-page-docs:
     runs-on: ubuntu-latest
 
     steps:
