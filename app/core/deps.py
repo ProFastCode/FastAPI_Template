@@ -2,9 +2,10 @@
 Dependencies
 """
 
+from typing import Annotated, AsyncGenerator
+
 from fastapi import Depends
 from fastapi.security import APIKeyHeader
-from typing_extensions import Annotated, AsyncGenerator
 
 from app.core.db import Database, SessionLocal
 from app.core.logic import Logic

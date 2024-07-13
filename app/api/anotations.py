@@ -2,15 +2,14 @@
 Dependencies
 """
 
-from fastapi import Depends
-from typing_extensions import Annotated
+from typing import Annotated
 
 from app.core import deps
 
-Database = Annotated[deps.Database, Depends(deps.get_db)]
+Database = Annotated[deps.Database, deps.Depends(deps.get_db)]
 
-Security = Annotated[deps.Security, Depends(deps.get_security)]
+Security = Annotated[deps.Security, deps.Depends(deps.get_security)]
 
-Logic = Annotated[deps.Logic, Depends(deps.get_logic)]
+Logic = Annotated[deps.Logic, deps.Depends(deps.get_logic)]
 
-CurrentUser = Annotated[deps.User, Depends(deps.get_current_user)]
+CurrentUser = Annotated[deps.User, deps.Depends(deps.get_current_user)]
