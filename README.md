@@ -1,5 +1,3 @@
-[Preview API](https://profastcode.github.io/FastAPI_Template/docs/)
-
 # FastAPI Template
 
 **Create a .env file based on .env.dist and make all the necessary customizations.**
