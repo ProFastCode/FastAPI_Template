@@ -23,8 +23,8 @@ jobs:
 
       - name: Wait run backend
         run: |
-          util $(curl http://0.0.0.0:8000); do
-            sleep 1
+          while $(curl http://0.0.0.0:8000); do
+          sleep 1
           done
 
       - name: Create docs directory if it doesn't exist
