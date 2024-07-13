@@ -21,12 +21,6 @@ jobs:
         run: |
           docker-compose up -d
 
-      - name: Wait run backend
-        run: |
-          while $(curl http://0.0.0.0:8000); do
-          sleep 1
-          done
-
       - name: Create docs directory if it doesn't exist
         run: |
           if [ ! -d "docs" ]; then
@@ -35,7 +29,9 @@ jobs:
 
       - name: Generate page docs
         run: |
-          curl -o docs/openapi.json --silent --fail http://0.0.0.0:8000/api/openapi.json
+          until $(curl -o docs/openapi.json --silent --fail http://0.0.0.0:8000/api/openapi.json); do
+            sleep 1
+          done
           curl -o docs/swagger.html --silent --fail http://0.0.0.0:8000/api/docs
           sed 's:/api/openapi.json:openapi.json:g' docs/swagger.html > docs/index.html
 
