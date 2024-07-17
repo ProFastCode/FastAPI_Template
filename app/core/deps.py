@@ -2,7 +2,7 @@
 Dependencies
 """
 
-from typing import Annotated, AsyncGenerator
+from typing import Annotated, Any, AsyncGenerator
 
 from fastapi import Depends
 from fastapi.security import APIKeyHeader
@@ -13,7 +13,7 @@ from app.logic import Logic
 from app.models.user import User
 
 
-async def get_db() -> AsyncGenerator[Database]:
+async def get_db() -> AsyncGenerator[Database, Any]:
     async with SessionLocal() as session:
         yield Database(session)
 
@@ -30,7 +30,7 @@ async def get_logic(
 
 
 async def get_current_user(
-    token: Annotated[str, Depends(APIKeyHeader(name='access-token'))],
+    token: Annotated[str, Depends(APIKeyHeader(name="access-token"))],
     logic: Annotated[Logic, Depends(get_logic)],
 ) -> User | None:
     return await logic.users.retrieve_by_token(token)
