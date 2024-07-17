@@ -8,8 +8,8 @@ from fastapi import Depends
 from fastapi.security import APIKeyHeader
 
 from app.core.db import Database, SessionLocal
-from app.core.logic import Logic
 from app.core.security import Security
+from app.logic import Logic
 from app.models.user import User
 
 

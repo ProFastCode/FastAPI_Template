@@ -1,5 +1,5 @@
 """
-Dependencies
+Dependency annotations
 """
 
 from typing import Annotated

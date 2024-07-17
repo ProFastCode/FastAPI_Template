@@ -1,0 +1,33 @@
+name: Reformat code
+
+on: push
+
+permissions:
+  contents: write
+
+jobs:
+  reformat-code:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          architecture: "x64"
+      - name: Display Python version
+        run: python -c "import sys; print(sys.version)"
+
+      - name: Setup poetry and dev requirements
+        run: |
+          pip install poetry
+          poetry install --with dev
+
+      - name: Reformat code
+        run: make ref
+
+      - uses: EndBug/add-and-commit@v9
+        with:
+          default_author: github_actions
