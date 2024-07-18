@@ -7,15 +7,15 @@ from typing import Annotated, Any, AsyncGenerator
 from fastapi import Depends
 from fastapi.security import APIKeyHeader
 
-from app.core.db import Database, SessionLocal
+from app.core.db import Database
 from app.core.security import Security
 from app.logic import Logic
 from app.models.user import User
 
 
 async def get_db() -> AsyncGenerator[Database, Any]:
-    async with SessionLocal() as session:
-        yield Database(session)
+    async with Database() as db:
+        yield db
 
 
 async def get_security() -> Security:
