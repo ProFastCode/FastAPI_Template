@@ -1,20 +1,24 @@
-"""
-Database
-"""
-
 from sqlalchemy.ext.asyncio import AsyncEngine, async_sessionmaker, create_async_engine
 from sqlmodel.ext.asyncio.session import AsyncSession
-
 from app import repositories as repos
 from app.core.settings import settings
 
 
 class Database:
+    _instance = None
+
+    def __new__(cls, *args, **kwargs):
+        if cls._instance is None:
+            cls._instance = super(Database, cls).__new__(cls)
+        return cls._instance
+
     def __init__(
         self, engine: AsyncEngine | None = None, session: AsyncSession | None = None
     ) -> None:
-        self.engine = engine
-        self.session = session
+        if not hasattr(self, "initialized"):  # Проверка, инициализирован ли объект
+            self.engine = engine
+            self.session = session
+            self.initialized = True  # Установим флаг инициализации
 
     async def __set_async_engine(self) -> None:
         if self.engine is None:

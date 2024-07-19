@@ -11,7 +11,7 @@ class Logic:
         self.users = Users(self)
 
     @classmethod
-    async def create(cls):
+    async def create(cls) -> "Logic":
         async with Database() as db:
             return cls(db)
 
