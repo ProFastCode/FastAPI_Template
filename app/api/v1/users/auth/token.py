@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from app.api import anotations
+from app.api import deps
 from app.models.token import AccessToken
 from app.models.user import UserCreate
 
@@ -8,7 +8,7 @@ router = APIRouter(prefix="/token")
 
 
 @router.post("/", response_model=AccessToken)
-async def token(data: UserCreate, logic: anotations.Logic):
+async def token(data: UserCreate, logic: deps.Logic):
     """
     Retrieve new access token
     """

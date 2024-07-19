@@ -1,12 +1,19 @@
 from app.core.db import Database
-from app.core.security import Security
 
 from .users import Users
+from .security import Security
 
 
 class Logic:
-    def __init__(self, db: Database, security: Security):
-        self.users = Users(db, security)
+    def __init__(self, db: Database):
+        self.db = db
+        self.security = Security()
+        self.users = Users(self)
+
+    @classmethod
+    async def create(cls):
+        async with Database() as db:
+            return cls(db)
 
 
-__all__ = ['Logic']
+__all__ = ["Logic"]

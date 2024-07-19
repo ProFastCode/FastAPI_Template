@@ -1,13 +1,13 @@
 from fastapi import APIRouter
 
-from app.api import anotations
+from app.api import deps
 from app.models.user import UserCreate, UserRead
 
 router = APIRouter(prefix="/create")
 
 
 @router.post("/", response_model=UserRead)
-async def create(data: UserCreate, logic: anotations.Logic):
+async def create(data: UserCreate, logic: deps.Logic):
     """
     Create user
     """

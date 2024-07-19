@@ -4,14 +4,14 @@ User Endpoints Module
 
 from fastapi import APIRouter
 
-from app.api import anotations
+from app.api import deps
 from app.models.user import UserRead
 
 router = APIRouter()
 
 
 @router.get("/", response_model=UserRead)
-async def retrieve(user: anotations.CurrentUser):
+async def retrieve(user: deps.User):
     """
     Retrieve user
     """
