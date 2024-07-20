@@ -15,10 +15,10 @@ class Database:
     def __init__(
         self, engine: AsyncEngine | None = None, session: AsyncSession | None = None
     ) -> None:
-        if not hasattr(self, "initialized"):  # Проверка, инициализирован ли объект
+        if not hasattr(self, "initialized"):
             self.engine = engine
             self.session = session
-            self.initialized = True  # Установим флаг инициализации
+            self.initialized = True
 
     async def __set_async_engine(self) -> None:
         if self.engine is None:
