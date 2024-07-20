@@ -1,7 +1,7 @@
 from app.core.db import Database
 
-from .users import Users
 from .security import Security
+from .users import Users
 
 
 class Logic:
@@ -11,9 +11,9 @@ class Logic:
         self.users = Users(self)
 
     @classmethod
-    async def create(cls) -> "Logic":
+    async def create(cls) -> 'Logic':
         async with Database() as db:
             return cls(db)
 
 
-__all__ = ["Logic"]
+__all__ = ['Logic']

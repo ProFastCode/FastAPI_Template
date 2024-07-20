@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 
 
 class Users:
-    def __init__(self, logic: "Logic"):
+    def __init__(self, logic: 'Logic'):
         self.logic = logic
         self.auth = Auth(self.logic)
 
@@ -26,7 +26,9 @@ class Users:
     async def retrieve_by_token(self, token: str) -> User | None:
         if payload := self.logic.security.jwt.decode_token(token):
             if not (
-                user := await self.logic.db.user.retrieve_one(ident=payload.get("id"))
+                user := await self.logic.db.user.retrieve_one(
+                    ident=payload.get('id')
+                )
             ):
                 raise exps.UserNotFoundException()
             else:

@@ -1,5 +1,7 @@
-from sqlalchemy.ext.asyncio import AsyncEngine, async_sessionmaker, create_async_engine
+from sqlalchemy.ext.asyncio import (AsyncEngine, async_sessionmaker,
+                                    create_async_engine)
 from sqlmodel.ext.asyncio.session import AsyncSession
+
 from app import repositories as repos
 from app.core.settings import settings
 
@@ -13,9 +15,11 @@ class Database:
         return cls._instance
 
     def __init__(
-        self, engine: AsyncEngine | None = None, session: AsyncSession | None = None
+        self,
+        engine: AsyncEngine | None = None,
+        session: AsyncSession | None = None,
     ) -> None:
-        if not hasattr(self, "initialized"):
+        if not hasattr(self, 'initialized'):
             self.engine = engine
             self.session = session
             self.initialized = True

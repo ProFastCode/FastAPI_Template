@@ -10,7 +10,7 @@ from app.models.user import UserRead
 router = APIRouter()
 
 
-@router.get("/", response_model=UserRead)
+@router.get('/', response_model=UserRead)
 async def retrieve(user: deps.User):
     """
     Retrieve user
@@ -18,4 +18,4 @@ async def retrieve(user: deps.User):
     return user
 
 
-__all__ = ["router"]
+__all__ = ['router']
