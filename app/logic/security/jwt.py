@@ -13,11 +13,11 @@ class JWT:
         try:
             payload = jwt.decode(token, self.secret_key, algorithms=['HS256'])
         except Exception:
-            raise exps.TOKEN_INVALID
+            raise exps.TokenInvalidException()
 
         exp = payload.get('exp')
         if exp and dt.datetime.now(dt.UTC).timestamp() > exp:
-            raise exps.TOKEN_EXPIRED
+            raise exps.TokenExpiredException()
         return payload.get('payload')
 
     def encode_token(self, payload: dict, minutes: int) -> str:

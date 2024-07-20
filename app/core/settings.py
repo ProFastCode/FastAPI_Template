@@ -26,7 +26,7 @@ class Settings(BaseSettings):
 
     @property
     def pg_dsn(self) -> PostgresDsn:
-        dsn = PostgresDsn.build(
+        return PostgresDsn.build(
             scheme='postgresql+asyncpg',
             username=self.POSTGRES_USER,
             password=self.POSTGRES_PASSWORD,
@@ -34,7 +34,6 @@ class Settings(BaseSettings):
             port=self.POSTGRES_PORT,
             path=self.POSTGRES_DB,
         )
-        return dsn
 
 
 settings = Settings()

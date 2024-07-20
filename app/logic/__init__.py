@@ -1,3 +1,5 @@
+from typing import Self
+
 from app.core.db import Database
 
 from .security import Security
@@ -11,7 +13,7 @@ class Logic:
         self.users = Users(self)
 
     @classmethod
-    async def create(cls) -> 'Logic':
+    async def create(cls) -> Self:
         async with Database() as db:
             return cls(db)
 
