@@ -12,7 +12,7 @@ async def token(data: UserCreate, logic: deps.Logic):
     """
     Retrieve new access token
     """
-    return await logic.users.generate_token(**data.model_dump())
+    return await logic.users.auth.generate_token(**data.model_dump())
 
 
 __all__ = ["router"]
