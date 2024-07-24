@@ -1,6 +1,52 @@
-# FastAPI Template
+# FastAPI
 
-**Create a .env file based on .env.dist and make all the necessary customizations.**
+## File Structure
+```
+.
+├── __init__.py
+├── api
+│   ├── __init__.py
+│   ├── deps.py
+│   └── v1
+│       ├── __init__.py
+│       └── users
+│           ├── __init__.py
+│           ├── auth
+│           │   ├── __init__.py
+│           │   └── token.py
+│           ├── create.py
+│           └── retrieve.py
+├── core
+│   ├── __init__.py
+│   ├── db.py
+│   ├── exps.py
+│   └── settings.py
+├── logic
+│   ├── __init__.py
+│   ├── security
+│   │   ├── __init__.py
+│   │   ├── jwt.py
+│   │   └── pwd.py
+│   └── users
+│       ├── __init__.py
+│       ├── auth
+│       │   ├── __init__.py
+│       │   └── auth.py
+│       └── users.py
+├── models
+│   ├── __init__.py
+│   ├── base.py
+│   ├── token.py
+│   └── user.py
+└── repositories
+    ├── __init__.py
+    ├── abstract.py
+    └── user.py
+
+11 directories, 28 files
+```
+
+## Create a `.env` file based on `.env.dist` and make all the necessary customizations
 
 ### To run the application in a docker container, run the command
 
