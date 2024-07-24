@@ -1,4 +1,4 @@
-name: Update README with File Structure
+name: Get tree and commit to readme
 
 on:
   push:
@@ -15,7 +15,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Update README.md
+      - name: Get tree and update README.md
         uses: actions/github-script@v6
         with:
           script: |

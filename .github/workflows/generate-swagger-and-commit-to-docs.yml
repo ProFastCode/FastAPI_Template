@@ -1,4 +1,4 @@
-name: Generate page docs
+name: Generate swagger and commit to /docs
 
 on: push
 
