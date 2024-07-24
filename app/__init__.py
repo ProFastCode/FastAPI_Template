@@ -23,8 +23,8 @@ app = FastAPI(
 app.include_router(api.api_router)
 
 
-@app.exception_handler(exps.BaseException)
-async def exception_handler(request, exc: exps.BaseException):
+@app.exception_handler(exps.CustomException)
+async def exception_handler(request, exc: exps.CustomException):
     return JSONResponse(
         status_code=exc.status_code,
         content={'detail': exc.message},
