@@ -5,9 +5,9 @@ from typing import Optional
 
 from sqlmodel.ext.asyncio.session import AsyncSession
 
-from app.models.user import User
+from app.models.users.user import User
 
-from .abstract import Repository
+from .base import Repository
 
 
 class UserRepo(Repository[User]):

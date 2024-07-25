@@ -9,7 +9,7 @@ class JWT:
     def __init__(self, secret_key: str):
         self.secret_key: str = secret_key
 
-    def decode_token(self, token: str) -> dict | None:
+    def decode_token(self, token: str) -> dict:
         try:
             payload = jwt.decode(token, self.secret_key, algorithms=['HS256'])
         except Exception:
@@ -18,7 +18,9 @@ class JWT:
         exp = payload.get('exp')
         if exp and dt.datetime.now(dt.UTC).timestamp() > exp:
             raise exps.TokenExpiredException()
-        return payload.get('payload')
+        if (payload := payload.get('payload', None)) is None:
+            raise exps.TokenInvalidException()
+        return payload
 
     def encode_token(self, payload: dict, minutes: int) -> str:
         claims = {
