@@ -4,8 +4,7 @@ Database
 
 from typing import Self
 
-from sqlalchemy.ext.asyncio import (AsyncEngine, async_sessionmaker,
-                                    create_async_engine)
+from sqlalchemy.ext.asyncio import AsyncEngine, async_sessionmaker, create_async_engine
 from sqlmodel.ext.asyncio.session import AsyncSession
 
 from app import repositories as repos
@@ -13,22 +12,13 @@ from app.core.settings import settings
 
 
 class Database:
-    _instance = None
-
-    def __new__(cls, *args, **kwargs) -> 'Database':
-        if cls._instance is None:
-            cls._instance = super(Database, cls).__new__(cls)
-        return cls._instance
-
     def __init__(
         self,
         engine: AsyncEngine | None = None,
         session: AsyncSession | None = None,
     ) -> None:
-        if not hasattr(self, 'initialized'):
-            self.__engine = engine
-            self.__session = session
-            self.initialized = True
+        self.__engine = engine
+        self.__session = session
 
     async def __set_async_engine(self) -> None:
         if self.__engine is None:
@@ -60,4 +50,3 @@ class Database:
         if self.__session is not None:
             await self.__session.commit()
             await self.__session.close()
-            self.__session = None
