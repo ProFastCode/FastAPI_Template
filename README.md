@@ -9,11 +9,11 @@
 │   ├── deps.py
 │   └── v1
 │       ├── __init__.py
+│       ├── auth
+│       │   ├── __init__.py
+│       │   └── token.py
 │       └── users
 │           ├── __init__.py
-│           ├── auth
-│           │   ├── __init__.py
-│           │   └── token.py
 │           ├── create.py
 │           └── retrieve.py
 ├── core
@@ -23,27 +23,36 @@
 │   └── settings.py
 ├── logic
 │   ├── __init__.py
+│   ├── auth
+│   │   ├── __init__.py
+│   │   └── auth.py
+│   ├── logic.py
 │   ├── security
 │   │   ├── __init__.py
 │   │   ├── jwt.py
-│   │   └── pwd.py
+│   │   ├── pwd.py
+│   │   └── security.py
 │   └── users
 │       ├── __init__.py
-│       ├── auth
-│       │   ├── __init__.py
-│       │   └── auth.py
 │       └── users.py
 ├── models
 │   ├── __init__.py
+│   ├── auth
+│   │   ├── __init__.py
+│   │   └── token.py
 │   ├── base.py
-│   ├── token.py
-│   └── user.py
+│   ├── types
+│   │   ├── __init__.py
+│   │   └── unix.py
+│   └── users
+│       ├── __init__.py
+│       └── user.py
 └── repositories
     ├── __init__.py
-    ├── abstract.py
+    ├── base.py
     └── user.py
 
-11 directories, 28 files
+14 directories, 34 files
 ```
 
 ## Create a `.env` file based on `.env.dist` and make all the necessary customizations
