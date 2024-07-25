@@ -19,12 +19,8 @@ blue:
 isort:
 	poetry run isort app/
 
-.PHONY: ruff
-ruff:
-	poetry run ruff check app/ --fix --respect-gitignore
-
 .PHONY: ref
-ref: blue isort ruff
+ref: blue isort
 
 .PHONY: dev
 dev:
