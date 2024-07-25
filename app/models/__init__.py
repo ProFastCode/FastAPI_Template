@@ -2,6 +2,6 @@
 Database Models Module
 """
 
-from . import token, user
+from . import users
 
-__all__ = ['user', 'token']
+__all__ = ['users',]

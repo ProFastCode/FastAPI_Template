@@ -4,7 +4,7 @@ User Model
 
 from sqlmodel import Field, SQLModel
 
-from .base import IDModel
+from app.models.base import IDModel
 
 
 class UserBase(SQLModel):

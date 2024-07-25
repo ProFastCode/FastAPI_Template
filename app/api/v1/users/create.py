@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
 from app.api import deps
-from app.models.user import UserCreate, UserRead
+from app.models.users.user import UserCreate, UserRead
 
 router = APIRouter(prefix='/create')
 
@@ -11,7 +11,7 @@ async def create(data: UserCreate, logic: deps.Logic):
     """
     Create user
     """
-    return await logic.users.create(**data.model_dump())
+    return await logic.users.create(data)
 
 
 __all__ = ['router']
