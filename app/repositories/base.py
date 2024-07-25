@@ -1,15 +1,7 @@
 import abc
-from typing import (
-    Any,
-    Generic,
-    List,
-    NoReturn,
-    Optional,
-    Sequence,
-    Type,
-    TypeAlias,
-    TypeVar
-)
+from typing import (Any, Generic, List, NoReturn, Optional, Sequence, Type,
+                    TypeAlias, TypeVar)
+
 import sqlmodel as sm
 from sqlmodel.ext.asyncio.session import AsyncSession
 
@@ -29,10 +21,10 @@ class Repository(Generic[AbstractModel], metaclass=abc.ABCMeta):
         return model
 
     async def retrieve_one(
-            self,
-            *,
-            ident: Optional[int] = None,
-            where_clauses: WhereClauses = None,
+        self,
+        *,
+        ident: Optional[int] = None,
+        where_clauses: WhereClauses = None,
     ) -> Optional[AbstractModel]:
         if ident is not None:
             return await self.session.get(self.model, ident)
@@ -43,10 +35,10 @@ class Repository(Generic[AbstractModel], metaclass=abc.ABCMeta):
         return entity.first()
 
     async def retrieve_many(
-            self,
-            where_clauses: WhereClauses = None,
-            limit: Optional[int] = None,
-            order_by: Optional[Any] = None,
+        self,
+        where_clauses: WhereClauses = None,
+        limit: Optional[int] = None,
+        order_by: Optional[Any] = None,
     ) -> Optional[Sequence[AbstractModel]]:
         stmt = sm.select(self.model)
         if where_clauses is not None:

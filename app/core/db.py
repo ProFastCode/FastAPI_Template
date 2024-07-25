@@ -21,9 +21,9 @@ class Database:
         return cls._instance
 
     def __init__(
-            self,
-            engine: AsyncEngine | None = None,
-            session: AsyncSession | None = None,
+        self,
+        engine: AsyncEngine | None = None,
+        session: AsyncSession | None = None,
     ) -> None:
         if not hasattr(self, 'initialized'):
             self.__engine = engine

@@ -1,5 +1,3 @@
 from .unix import UnixType
 
-__all__ = [
-    'UnixType'
-]
+__all__ = ['UnixType']

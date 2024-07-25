@@ -1,11 +1,11 @@
-from typing import Self, AsyncGenerator
 from contextlib import asynccontextmanager
+from typing import AsyncGenerator, Self
 
 from app.core.db import Database
 
+from .auth import Auth
 from .security import Security
 from .users import Users
-from .auth import Auth
 
 
 class Logic:

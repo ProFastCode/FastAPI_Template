@@ -20,8 +20,8 @@ Logic = Annotated[_Logic, Depends(get_logic)]
 
 
 async def get_user(
-        token: Annotated[str, Depends(APIKeyHeader(name='access-token'))],
-        logic: Logic,
+    token: Annotated[str, Depends(APIKeyHeader(name='access-token'))],
+    logic: Logic,
 ) -> _User | None:
     return await logic.users.retrieve_by_token(token)
 

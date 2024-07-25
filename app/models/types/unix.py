@@ -11,7 +11,7 @@ class UnixType(TypeDecorator):
         return dialect.type_descriptor(BigInteger())
 
     def process_bind_param(
-            self, value: dt.date | dt.datetime | str | None, dialect
+        self, value: dt.date | dt.datetime | str | None, dialect
     ) -> int | None:
         if isinstance(value, dt.datetime):
             return int(value.timestamp())
@@ -21,7 +21,7 @@ class UnixType(TypeDecorator):
             return int(dt.datetime.fromisoformat(value).timestamp())
 
     def process_result_value(
-            self, value: int | None, dialect
+        self, value: int | None, dialect
     ) -> dt.datetime | None:
         if isinstance(value, int):
             return dt.datetime.fromtimestamp(value, dt.UTC)
