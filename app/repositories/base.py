@@ -1,11 +1,20 @@
 import abc
-from typing import (Any, Generic, List, NoReturn, Optional, Sequence, Type,
-                    TypeAlias, TypeVar)
+from typing import (
+    Any,
+    Generic,
+    List,
+    NoReturn,
+    Optional,
+    Sequence,
+    Type,
+    TypeAlias,
+    TypeVar,
+)
 
 import sqlmodel as sm
 from sqlmodel.ext.asyncio.session import AsyncSession
 
-AbstractModel = TypeVar('AbstractModel', bound=sm.SQLModel)
+AbstractModel = TypeVar("AbstractModel", bound=sm.SQLModel)
 WhereClauses: TypeAlias = Optional[List[sm.DefaultClause | bool]]
 
 
@@ -53,4 +62,3 @@ class Repository(Generic[AbstractModel], metaclass=abc.ABCMeta):
     async def delete(self, instance: AbstractModel) -> NoReturn:
         await self.session.delete(instance)
         await self.session.flush()
-        await self.session.commit()
