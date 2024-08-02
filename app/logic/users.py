@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
 from app.core import exps
-from app.models.users.user import User, UserCreate
+from app.models.users import User, UserCreate
 
 if TYPE_CHECKING:
     from app.logic import Logic

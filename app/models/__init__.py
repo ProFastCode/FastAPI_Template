@@ -2,8 +2,6 @@
 Database Models Module
 """
 
-from . import users
+from . import auth, users
 
-__all__ = [
-    'users',
-]
+__all__ = ['users', 'auth']

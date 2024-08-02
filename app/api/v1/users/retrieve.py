@@ -5,7 +5,7 @@ User Endpoints Module
 from fastapi import APIRouter
 
 from app.api import deps
-from app.models.users.user import UserRead
+from app.models.users import UserRead
 
 router = APIRouter()
 

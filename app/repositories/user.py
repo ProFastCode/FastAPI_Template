@@ -1,11 +1,12 @@
 """
 User Repository
 """
+
 from typing import Optional
 
 from sqlmodel.ext.asyncio.session import AsyncSession
 
-from app.models.users.user import User
+from app.models.users import User
 
 from .base import Repository
 

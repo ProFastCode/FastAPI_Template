@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING
 
 from app.core import exps
 from app.models.auth import AccessToken
-from app.models.users.user import UserCreate
+from app.models.users import UserCreate
 
 if TYPE_CHECKING:
     from app.logic import Logic

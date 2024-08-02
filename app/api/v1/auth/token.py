@@ -2,7 +2,7 @@ from fastapi import APIRouter
 
 from app.api import deps
 from app.models.auth import AccessToken
-from app.models.users.user import UserCreate
+from app.models.users import UserCreate
 
 router = APIRouter(prefix='/token')
 

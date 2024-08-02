@@ -17,6 +17,6 @@ class Logic:
 
     @classmethod
     @asynccontextmanager
-    async def create(cls) -> AsyncGenerator['Logic', None]:
+    async def create(cls) -> AsyncGenerator["Logic", None]:
         async with Database() as db:
             yield cls(db)

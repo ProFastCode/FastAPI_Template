@@ -1,20 +1,11 @@
 import abc
-from typing import (
-    Any,
-    Generic,
-    List,
-    NoReturn,
-    Optional,
-    Sequence,
-    Type,
-    TypeAlias,
-    TypeVar,
-)
+from typing import (Any, Generic, List, NoReturn, Optional, Sequence, Type,
+                    TypeAlias, TypeVar)
 
 import sqlmodel as sm
 from sqlmodel.ext.asyncio.session import AsyncSession
 
-AbstractModel = TypeVar("AbstractModel", bound=sm.SQLModel)
+AbstractModel = TypeVar('AbstractModel', bound=sm.SQLModel)
 WhereClauses: TypeAlias = Optional[List[sm.DefaultClause | bool]]
 
 

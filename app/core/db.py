@@ -24,7 +24,7 @@ class Database:
     async def __set_async_engine(self) -> None:
         if self.__engine is None:
             self.__engine = create_async_engine(
-                settings.pg_dsn.unicode_string(), echo=False, future=True
+                settings.db_dsn, echo=False, future=True
             )
 
     async def __set_async_session(self) -> None:

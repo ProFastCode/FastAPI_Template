@@ -36,6 +36,3 @@ class TimestampModel(SQLModel):
         nullable=True,
         sa_column_kwargs={'onupdate': datetime_utc_now},
     )
-
-    class Config:
-        arbitrary_types_allowed = True

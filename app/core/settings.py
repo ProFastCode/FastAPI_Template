@@ -2,38 +2,39 @@
 Settings
 """
 
-from pydantic import PostgresDsn
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from sqlalchemy import URL
 
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
-        env_file='.env', env_file_encoding='utf-8', case_sensitive=True
+        env_file=".env", env_file_encoding="utf-8", case_sensitive=True
     )
 
     # APP
-    APP_PATH: str = '/api'
-    APP_TITLE: str = 'FastAPI Template'
-    APP_VERSION: str = 'beta'
-    APP_SECRET_KEY: str = 'abc'
+    APP_PATH: str = "/api"
+    APP_TITLE: str = "FastAPI Template"
+    APP_VERSION: str = "beta"
+    APP_SECRET_KEY: str = "abc"
 
     # DATABASE
-    POSTGRES_DB: str = 'postgres'
-    POSTGRES_HOST: str = '127.0.0.1'
-    POSTGRES_PORT: int = 5432
-    POSTGRES_USER: str = 'postgres'
-    POSTGRES_PASSWORD: str = 'postgres'
+    DB: str = "postgres"
+    DB_HOST: str = "localhost"
+    DB_PORT: int = 5432
+    DB_USER: str = ""
+    DB_PASSWORD: str = ""
+    DB_DRIVERNAME: str = "postgresql+asyncpg"
 
     @property
-    def pg_dsn(self) -> PostgresDsn:
-        return PostgresDsn.build(
-            scheme='postgresql+asyncpg',
-            username=self.POSTGRES_USER,
-            password=self.POSTGRES_PASSWORD,
-            host=self.POSTGRES_HOST,
-            port=self.POSTGRES_PORT,
-            path=self.POSTGRES_DB,
-        )
+    def db_dsn(self) -> str:
+        return URL.create(
+            drivername=self.DB_DRIVERNAME,
+            username=self.DB_USER,
+            password=self.DB_PASSWORD,
+            host=self.DB_HOST,
+            port=self.DB_PORT,
+            database=self.DB,
+        ).render_as_string(hide_password=False)
 
 
 settings = Settings()
