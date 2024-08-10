@@ -8,22 +8,22 @@ from sqlalchemy import URL
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
-        env_file=".env", env_file_encoding="utf-8", case_sensitive=True
+        env_file='.env', env_file_encoding='utf-8', case_sensitive=True
     )
 
     # APP
-    APP_PATH: str = "/api"
-    APP_TITLE: str = "FastAPI Template"
-    APP_VERSION: str = "beta"
-    APP_SECRET_KEY: str = "abc"
+    APP_PATH: str = '/api'
+    APP_TITLE: str = 'FastAPI Template'
+    APP_VERSION: str = 'beta'
+    APP_SECRET_KEY: str = 'abc'
 
     # DATABASE
-    DB: str = "postgres"
-    DB_HOST: str = "localhost"
+    DB: str = 'postgres'
+    DB_HOST: str = 'localhost'
     DB_PORT: int = 5432
-    DB_USER: str = ""
-    DB_PASSWORD: str = ""
-    DB_DRIVERNAME: str = "postgresql+asyncpg"
+    DB_USER: str = ''
+    DB_PASSWORD: str = ''
+    DB_DRIVERNAME: str = 'postgresql+asyncpg'
 
     @property
     def db_dsn(self) -> str:

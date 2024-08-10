@@ -7,8 +7,9 @@ help:
 	@echo "  dev		Start the app"
 	@echo "  ref		Reformat code"
 	@echo "  req		pyproject.toml >> requirements.txt"
+	@echo "  test	 	 Start the pytest"
 	@echo "  migrate		Alembic migrate database"
-	@echo "  generate		Alembic generate database"
+	@echo "  generate	 	 Alembic generate database"
 
 
 .PHONY:	blue
@@ -29,6 +30,10 @@ dev:
 .PHONY: req
 req:
 	poetry export --without-hashes --without-urls | awk '{ print $1 }' FS=';' > requirements.txt
+
+.PHONY: test
+test:
+	poetry run pytest tests
 
 .PHONY: migrate
 migrate:
