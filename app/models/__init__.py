@@ -1,7 +1,3 @@
-"""
-Database Models Module
-"""
+from . import auth, user
 
-from . import auth, users
-
-__all__ = ['users', 'auth']
+__all__ = ["user", "auth"]

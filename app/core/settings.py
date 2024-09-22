@@ -1,39 +1,36 @@
-"""
-Settings
-"""
-
-from pydantic_settings import BaseSettings, SettingsConfigDict
 from sqlalchemy import URL
+from pydantic import Field
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
-        env_file='.env', env_file_encoding='utf-8', case_sensitive=True
+        env_file=".env", env_file_encoding="utf-8", case_sensitive=True
     )
 
-    # APP
-    APP_PATH: str = '/api'
-    APP_TITLE: str = 'FastAPI Template'
-    APP_VERSION: str = 'beta'
-    APP_SECRET_KEY: str = 'abc'
+    # App-related environment variables
+    app_path: str = Field(alias="APP_PATH")
+    app_title: str = Field(alias="APP_TITLE")
+    app_secret: str = Field(alias="APP_SECRET")
+    app_version: str = Field(alias="APP_VERSION")
 
-    # DATABASE
-    DB: str = 'postgres'
-    DB_HOST: str = 'localhost'
-    DB_PORT: int = 5432
-    DB_USER: str = ''
-    DB_PASSWORD: str = ''
-    DB_DRIVERNAME: str = 'postgresql+asyncpg'
+    # Postgres-related environment variables
+    postgres_db: str = Field(alias="POSTGRES_DB")
+    postgres_host: str = Field(alias="POSTGRES_HOST")
+    postgres_port: int = Field(alias="POSTGRES_PORT")
+    postgres_user: str = Field(alias="POSTGRES_USER")
+    postgres_password: str = Field(alias="POSTGRES_PASSWORD")
+    postgres_drivername: str = Field(alias="POSTGRES_DRIVERNAME")
 
     @property
-    def db_dsn(self) -> str:
+    def postgres_dsn(self) -> str:
         return URL.create(
-            drivername=self.DB_DRIVERNAME,
-            username=self.DB_USER,
-            password=self.DB_PASSWORD,
-            host=self.DB_HOST,
-            port=self.DB_PORT,
-            database=self.DB,
+            host=self.postgres_host,
+            port=self.postgres_port,
+            database=self.postgres_db,
+            username=self.postgres_user,
+            password=self.postgres_password,
+            drivername=self.postgres_drivername,
         ).render_as_string(hide_password=False)
 
 

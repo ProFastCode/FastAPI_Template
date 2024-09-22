@@ -6,5 +6,5 @@ from .pwd import PWD
 
 class Security:
     def __init__(self):
-        self.jwt = JWT(settings.APP_SECRET_KEY)
+        self.jwt = JWT(settings.app_secret)
         self.pwd = PWD()

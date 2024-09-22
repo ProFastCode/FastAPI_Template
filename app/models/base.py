@@ -34,5 +34,5 @@ class TimestampModel(SQLModel):
         default_factory=datetime_utc_now,
         sa_type=UnixType,
         nullable=True,
-        sa_column_kwargs={'onupdate': datetime_utc_now},
+        sa_column_kwargs={"onupdate": datetime_utc_now},
     )

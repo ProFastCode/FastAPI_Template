@@ -1,6 +1,4 @@
-"""
-Init App Module
-"""
+import os
 
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
@@ -9,14 +7,16 @@ from app import api
 from app.core import exps
 from app.core.settings import settings
 
+os.environ["TZ"] = "UTC"
+
 app = FastAPI(
-    title=settings.APP_TITLE,
-    root_path=settings.APP_PATH,
-    version=settings.APP_VERSION,
+    title=settings.app_title,
+    root_path=settings.app_path,
+    version=settings.app_version,
     contact={
-        'name': 'Fast Code',
-        'url': 'https://fast-code.pro/',
-        'email': 'fast.code.auth@gmail.com',
+        "name": "Fast Code",
+        "url": "https://fast-code.pro/",
+        "email": "fast.code.auth@gmail.com",
     },
 )
 
@@ -27,5 +27,5 @@ app.include_router(api.api_router)
 async def exception_handler(request, exc: exps.CustomException):
     return JSONResponse(
         status_code=exc.status_code,
-        content={'detail': exc.message},
+        content={"detail": exc.message},
     )
